@@ -1,0 +1,40 @@
+query productsShoes (
+  $first: Int
+) {
+  products (first: $first) {
+    id
+    department
+    spirit
+    productCategory
+    productType {
+      __typename
+      ... on Shoe {
+        id
+        brand
+        sizes
+        colors {
+          hex
+        }
+        shoeCategory
+        gender
+      }
+    }
+    name
+    slug
+    rating
+    price
+    description {
+      html
+    }
+    buttonType
+    buttonLabel
+    buttonLink
+    images {
+      id
+      url
+    }
+    highlights {
+      html
+    }
+  }
+}

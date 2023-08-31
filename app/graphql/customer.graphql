@@ -1,0 +1,10 @@
+query customer (
+  $email: String
+) {
+  customer (where: { email: $email }) {
+    id
+    email
+    image
+    name
+  }
+}
