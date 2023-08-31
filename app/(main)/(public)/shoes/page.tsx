@@ -47,7 +47,7 @@ export default function Shoes() {
             <li>{e.rating}</li>
             <li>{e.name}</li>
             <li>{e.price}</li>
-            <li>{e.description.html}</li>
+            <li dangerouslySetInnerHTML={{__html: e.description.html}} />
             <li>{e.buttonType}</li>
             <li>{e.buttonLabel}</li>
             <li>{e.buttonLink}</li>
@@ -62,7 +62,7 @@ export default function Shoes() {
                 
               </ul>
             </li>
-            <li>{e.highlights.html}</li>
+            <li dangerouslySetInnerHTML={{__html: e.highlights.html}} />
             
           </ul>
         )
