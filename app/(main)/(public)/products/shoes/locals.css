@@ -7,39 +7,12 @@
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
-.gallery {
-  width: 100%;
-  height: 400px;
-}
-
-.gallery img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.thumbs {
-  width: 100%;
-  height: 100px;
-}
-
-.thumbs img {
-  width: 100px;
-  height: auto;
-  max-height: fit-content;
-  object-fit: cover;
-}
-
-.thumbs .swiper-slide {
-  opacity: 0.5;
-  background: #fff;
-  overflow: hidden;
+.more-button {
+  z-index: 10;
+  bottom: -3rem;
+  right: -3rem;
 }
 
 .thumbs .swiper-slide-thumb-active {
