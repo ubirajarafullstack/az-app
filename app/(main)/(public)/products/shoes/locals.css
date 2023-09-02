@@ -9,12 +9,6 @@
   display: flex;
 }
 
-.more-button {
-  z-index: 10;
-  bottom: -3rem;
-  right: -3rem;
-}
-
 .thumbs .swiper-slide-thumb-active {
   opacity: 1;
 }

@@ -130,7 +130,7 @@ export default function Shoes() {
                       </Swiper>
                     </div>
                     
-                    <Link href="#" className="more-button absolute m-4 inline-block rounded-md bg-slate-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-600 focus:bg-indigo-600">Ver</Link>
+                    <Link href="#" className="more-button absolute z-10 -bottom-12 -right-12 m-4 inline-block rounded-md bg-slate-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-600 focus:bg-indigo-600">Ver</Link>
                   </div>
                   <div className="w-2/12 h-3/6">
                     <Swiper className="thumbs" {...thumbsOptions} onSwiper={setThumbsContainer}>
