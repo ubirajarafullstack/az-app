@@ -1,40 +1,52 @@
+fragment fields on Product {
+  id
+  department
+  spirit
+  productCategory
+  productType {
+    __typename
+    ... on Shoe {
+      id
+      brand
+      sizes
+      colors {
+        hex
+      }
+      shoeCategory
+      gender
+    }
+  }
+  name
+  slug
+  rating
+  price
+  description {
+    html
+  }
+  buttonType
+  buttonLabel
+  buttonLink
+  images {
+    id
+    url
+  }
+  highlights {
+    html
+  }
+}
+
 query productsShoes (
   $first: Int
 ) {
   products (first: $first) {
-    id
-    department
-    spirit
-    productCategory
-    productType {
-      __typename
-      ... on Shoe {
-        id
-        brand
-        sizes
-        colors {
-          hex
-        }
-        shoeCategory
-        gender
-      }
-    }
-    name
-    slug
-    rating
-    price
-    description {
-      html
-    }
-    buttonType
-    buttonLabel
-    buttonLink
-    images {
-      id
-      url
-    }
-    highlights {
-      html
-    }
+    ...fields
+  }
+}
+
+query productShoesBySlug (
+  $slug: String
+) {
+  product(where: {slug: $slug}) {
+    ...fields
   }
 }

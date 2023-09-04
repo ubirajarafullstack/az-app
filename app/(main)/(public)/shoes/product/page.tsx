@@ -2,11 +2,11 @@
 'use client';
 
 import Loading from '@/app/components/Loading';
-import { useProductsShoes } from '@/app/data/useProductsShoes';
+import { useAllProductsShoes } from '@/app/data/useAllProductsShoes';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Mousewheel, Keyboard, Pagination, Navigation, HashNavigation, FreeMode, Thumbs } from 'swiper/modules';
 import { SwiperOptions } from 'swiper/types';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 
 import 'swiper/css';
@@ -18,6 +18,15 @@ import 'swiper/css/thumbs';
 import './locals.css';
 
 export default function Shoes() {
+
+  let hash = useRef('null');
+
+  useEffect(() => {
+    if (location.hash) hash.current = location.hash.substring(1);
+    console.log('oi');
+  }, []);
+
+  console.log(hash.current);
 
   const [thumbsContainer, setThumbsContainer] = useState<any>(null);
 
@@ -68,17 +77,23 @@ export default function Shoes() {
   const onSlideChangeMain = () => console.log('on slide change main');
   const onSwiperMain = (swiper: any) => console.log("on swiper main object");
 
-  const { data, isLoading, error } = useProductsShoes(1);
+  const { data, isLoading, error } = useAllProductsShoes(2, hash.current );
 
   if (isLoading) return <Loading />;
   if (error) console.log(error);
 
+  let products = data.flat();
+
+  if (hash.current === 'null') products.shift();
+
+  console.log(products);
+
   return (
     <div className="h-screen flex justify-center items-center">
       <Swiper {...mainOptions} className="main" onSlideChange={onSlideChangeMain} onSwiper={onSwiperMain}>
-        {data?.map((e, i) => {
+        {products.map((e, i) => {
           return (
-            <SwiperSlide className="flex flex-col justify-center items-center" key={i} data-hash={e.slug}>
+            <SwiperSlide className="flex flex-col justify-center items-center" key={i} data-hash={e?.slug}>
 
               {/* {e.id}
               {e.department}
@@ -111,7 +126,7 @@ export default function Shoes() {
               {e.buttonLabel}
               {e.buttonLink}
 
-              <div dangerouslySetInnerHTML={{ __html: e.highlights.html }} /> */}
+            <div dangerouslySetInnerHTML={{ __html: e.highlights.html }} /> */}
 
               <div className="w-11/12 flex flex-col lg:flex-row-reverse">
 
@@ -120,7 +135,7 @@ export default function Shoes() {
                     <div className="w-full h-full">
                       <Swiper className="gallery bg-white rounded-md" {...galleryOptions}>
 
-                        {e.images.map((e, i) => {
+                        {e?.images.map((e, i) => {
                           return (
                             <SwiperSlide className="bg-white p-6 rounded-md flex flex-row justify-center items-center" key={i}>
                               <img className="block object-contain" src={e.url} alt="" />
@@ -130,13 +145,13 @@ export default function Shoes() {
 
                       </Swiper>
                     </div>
-                    
+
                     <Link href="#" className="more-button absolute z-10 -bottom-12 -right-12 m-4 inline-block rounded-md bg-slate-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-600 focus:bg-indigo-600">Ver</Link>
                   </div>
                   <div className="w-2/12 h-3/6">
                     <Swiper className="thumbs" {...thumbsOptions} onSwiper={setThumbsContainer}>
 
-                      {e.images.map((e, i) => {
+                      {e?.images.map((e, i) => {
                         return (
                           <SwiperSlide className="bg-white rounded-md opacity-50 flex flex-col justify-center items-center" key={i}>
                             <img className="w-full h-full block object-contain" src={e.url} alt="" />
@@ -150,9 +165,9 @@ export default function Shoes() {
 
                 <div className="info w-11/12 lg:w-5/12">
 
-                  <h1 className="m-4 md:text-2xl lg:text-2xl">{e.name}</h1>
+                  <h1 className="m-4 md:text-2xl lg:text-2xl">{e?.name}</h1>
 
-                  <h2 className="m-4 md:text-2xl lg:text-2xl">{e.price}</h2>
+                  <h2 className="m-4 md:text-2xl lg:text-2xl">{e?.price}</h2>
 
                   <Link href="#" className="more-button m-4 inline-block rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-600 focus:bg-indigo-600">Veja Mais</Link>
 

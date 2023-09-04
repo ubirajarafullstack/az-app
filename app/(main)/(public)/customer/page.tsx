@@ -1,12 +1,13 @@
 'use client';
 
+import Loading from '@/app/components/Loading';
 import { useCustomer } from '@/app/data/useCustomer';
 
 export default function Customer() {
   
   const { data, isLoading, error } = useCustomer('email@email.com');
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return <Loading />;
   if (error) console.log(error);
 
   console.log(data);
