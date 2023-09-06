@@ -125,12 +125,11 @@ export default function Shoes() {
               {e.buttonType}
               {e.buttonLabel}
               {e.buttonLink}
-
-            <div dangerouslySetInnerHTML={{ __html: e.highlights.html }} /> */}
+              <div dangerouslySetInnerHTML={{ __html: e.highlights.html }} /> */}
 
               <div className="w-11/12 flex flex-col lg:flex-row-reverse">
 
-                <div className="w-full gap-4 flex lg:w-7/12">
+                <div className="w-full h-96 gap-4 flex lg:w-7/12">
                   <div className="relative w-10/12">
                     <div className="w-full h-full">
                       <Swiper className="gallery bg-white rounded-md" {...galleryOptions}>
@@ -163,7 +162,7 @@ export default function Shoes() {
                   </div>
                 </div>
 
-                <div className="info w-11/12 lg:w-5/12">
+                <div className="info w-10/12 lg:w-5/12">
 
                   <h1 className="m-4 md:text-2xl lg:text-2xl">{e?.name}</h1>
 
