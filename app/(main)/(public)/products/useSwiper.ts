@@ -242,6 +242,65 @@ useEffect(() => {
   }
 }, [data]); // Pass the data state variable as a dependency array
 
+//
+
+// first 
+
+const [galleryContainer, setGalleryContainer] = useState<any>({});
+const [thumbsContainer, setThumbsContainer] = useState<any>({});
+
+// ...
+
+const gOnSwiper = (swiper: any) => {
+  // supondo que swiper tenha uma propriedade id que corresponde ao id do produto
+  setGalleryContainer((prev: any) => ({ ...prev, [swiper.id]: swiper }));
+  swiper.disable();
+};
+
+const tOnSwiper = (swiper: any) => {
+  // supondo que swiper tenha uma propriedade id que corresponde ao id do produto
+  setThumbsContainer((prev: any) => ({ ...prev, [swiper.id]: swiper }));
+  swiper.disable();
+};
+
+// second
+
+const getGallerySwiper = useCallback(
+  (id: string) => {
+    return galleryContainer[id];
+  },
+  [galleryContainer]
+);
+
+const getThumbsSwiper = useCallback(
+  (id: string) => {
+    return thumbsContainer[id];
+  },
+  [thumbsContainer]
+);
+
+// third
+
+const galleryOptions: SwiperOptions = {
+  ...commonOptions,
+  pagination: false,
+  watchSlidesProgress: true,
+  nested: true,
+  controller: { control: getThumbsSwiper(product.id) }, // passa a referência do swiper dos thumbs correspondente ao produto
+};
+
+const thumbsOptions: SwiperOptions = {
+  ...commonOptions,
+  direction: 'vertical',
+  spaceBetween: 10,
+  slidesPerView: 3,
+  pagination: false,
+  mousewheel: false,
+  keyboard: false,
+  freeMode: true,
+  watchSlidesProgress: true,
+  controller: { control: getGallerySwiper(product.id), by: "container" }, // passa a referência do swiper da galeria correspondente ao produto e define o modo de controle por container
+};
 
 
 */

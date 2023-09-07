@@ -30,20 +30,20 @@ export default function Shoes() {
 
   const getGallerySwiper = useCallback(
     (id: string) => {
-      return galleryContainer.current[id];
+      return galleryContainer.current[id]; // usa a propriedade current para acessar o objeto
     },
     [galleryContainer]
   );
 
   const getThumbsSwiper = useCallback(
     (id: string) => {
-      return thumbsContainer.current[id];
+      return thumbsContainer.current[id]; // usa a propriedade current para acessar o objeto
     },
     [thumbsContainer]
   );
 
   const commonOptions: SwiperOptions = {
-    modules: [Mousewheel, Keyboard, Pagination, Navigation, HashNavigation, FreeMode, Thumbs, Controller],
+    modules: [Mousewheel, Keyboard, Pagination, Navigation, HashNavigation, FreeMode, Thumbs],
     direction: 'horizontal',
     slidesPerView: 1,
     spaceBetween: 50,
@@ -71,7 +71,8 @@ export default function Shoes() {
     pagination: false,
     watchSlidesProgress: true,
     nested: true,
-    controller: { control: getThumbsSwiper(product.id) },
+    controller: { control: getThumbsSwiper(product.id) }, // passa a referência do swiper dos thumbs correspondente ao produto
+    virtual: true, // habilita a renderização virtual
   });
 
   const thumbsOptions: (product: any) => SwiperOptions = (product: any) => ({
@@ -84,53 +85,175 @@ export default function Shoes() {
     keyboard: false,
     freeMode: true,
     watchSlidesProgress: true,
-    controller: { control: getGallerySwiper(product.id), by: "container" },
+    controller: { control: getGallerySwiper(product.id), by: "container" }, // passa a referência do swiper da galeria correspondente ao produto e define o modo de controle por container
   });
 
 
-  useEffect(() => {
+  //console.log(products);
 
-    console.log(galleryContainer.current)
+  //begin teste
+  function teste() {
+    const picture = document.querySelectorAll('.gallery');
+    const thumb = document.querySelectorAll('.thumbs');
 
-    console.log(galleryContainer.current)
+    console.log(picture.length);
 
-    for (const key in galleryContainer.current) {
-      const gallerySwiper = galleryContainer.current[key];
-      gallerySwiper.enable();
-    }
+    // Use map to iterate over the thumbsContainer array and return a new array of swipers
+    //const thumbs = thumbsContainer.map((e: any, i:number) => {
+    for (let i = 0; i < picture.length; i++) {
 
-    for (const key in galleryContainer.current) {
-      const gallerySwiper = galleryContainer.current[key];
-      gallerySwiper.enable();
-      gallerySwiper.update({
-        thumbs: { swiper: thumbsContainer.current[key] },
+      thumb[i].classList.add('thumbs-' + i);
+      picture[i].classList.add('gallery-' + i);
+
+      let thumbs = (Swiper as any)('.thumbs-' + i, {
+        loop: true,
+        spaceBetween: 8,
+        slidesPerView: 3.2,
+        freeMode: true,
+        watchSlidesProgress: true,
       });
+
+      let pictures = (Swiper as any)('.gallery-' + i, {
+        loop: true,
+        autoHeight: false,
+        mousewheel: true,
+        keyboard: true,
+        nested: true,
+        spaceBetween: 1,
+        thumbs: {
+          swiper: thumbs,
+        },
+      });
+
     }
 
+    //});
+
+    // Use map to iterate over the picture array and return a new array of swipers
+    //const pictures = picture.map(() => {
+
+    //});
+
+  }
+  //end teste
+
+  //const onSlideChangeMain = (swiper: any) => teste();
+
+  useEffect(() => {
+    
+    if (typeof galleryContainer.current === 'object') {
+      for (const key in galleryContainer.current) {
+        const gallerySwiper = galleryContainer.current[key];
+        gallerySwiper.enable();
+        gallerySwiper.update({
+          thumbs: { swiper: thumbsContainer.current[key] },
+        });
+      }
+    }
   }, [thumbsContainer, galleryContainer]);
+  
+
 
   const onSwiper = (swiper: any) => {
-
+    //swiperRef.current = swiper;
+    // @ts-ignore
+    //console.log(swiperRef.current?.activeIndex)
   };
 
   const gOnSwiper = (swiper: any) => {
-    galleryContainer.current[swiper.id] = swiper;
+    galleryContainer.current[swiper.id] = swiper; // atribui a referência diretamente ao objeto
+    swiper.disable();
   };
 
   const tOnSwiper = (swiper: any) => {
-    thumbsContainer.current[swiper.id] = swiper;
+    thumbsContainer.current[swiper.id] = swiper; // atribui a referência diretamente ao objeto
+    swiper.disable();
   };
+
+  //const gOnSwiper = (swiper: any) => {
+    ////setGalleryContainer(swiper);
+    ////setGalleryContainer((prev: any) => [...prev, swiper]);
+    ////swiper.disable();
+    ////console.log(swiper);
+
+    //console.log(thumbsContainer);
+
+    ////let slides = swiper.slides;
+    // Get the current active slide
+    ////let activeSlide = slides[swiper.activeIndex];
+
+    // Get the data-swiper-slide-index attribute of the active slide
+    ////let index = activeSlide.getAttribute('data-swiper-slide-index');
+    ////console.log(index);
+    // Get the corresponding thumbs swiper from the thumbsContainer array
+    ////let tSwiper = thumbsContainer?.[index];
+    //console.log(tSwiper);
+    // Update the gallery swiper options with the corresponding thumbs swiper
+    ////swiper.update({
+    ////  thumbs: { swiper: thumbsContainer?.[index] },
+    ////});
+
+    /* swiper.__swiper__.extendDefaults({
+      thumbs: { swiper: tSwiperRef },
+    }); */
+    //gSwiperRef.current = swiper;
+    // @ts-ignore
+    //console.log(gSwiperRef.current?.activeIndex);
+
+    /* let activeIndex = swiper.activeIndex;
+
+    swiper.extendDefaults({
+      initialSlide: activeIndex,
+      thumbs: { swiper: tSwiperRef },
+    }); */
+  //};
+
+  //const tOnSwiper = (swiper: any) => {
+    ////setThumbsContainer(swiper);
+    ////setThumbsContainer((prev: any) => [...prev, swiper]);
+    ////swiper.disable();
+    /* useEffect(() => {
+      // Fetch some data from an API or a local source
+      // Update the thumbsContainer state with the data
+      setThumbsContainer(data);
+    }, []); */
+
+
+
+    //console.log(thumbsContainer);
+    //setTswiperRef(swiper);
+    //tSwiperRef.current = swiper;
+    // @ts-ignore
+    //console.log(tSwiperRef.current?.activeIndex);
+
+    /* let gSwiper = gSwiperRef.current;
+    let tSwiper = tSwiperRef.current;
+
+    // @ts-ignore
+    gSwiper?.update({
+      initialSlide: 0,
+      loop: true,
+      autoHeight: false,
+      mousewheel: true,
+      keyboard: true,
+      nested: true,
+      spaceBetween: 1,
+      thumbs: {
+        swiper: tSwiper
+      },
+    }); */
+  //};
 
   const onSlideChange = (swiper: any) => {
 
   };
 
   const gOnSlideChange = (swiper: any) => {
-
+    
   };
 
   const tOnSlideChange = (swiper: any) => {
-
+    
   };
 
   const { data, isLoading, error } = useAllProductsShoes(2, hash.current);
@@ -154,7 +277,7 @@ export default function Shoes() {
                 <div className="w-full h-96 gap-4 flex lg:w-7/12">
                   <div className="relative w-10/12">
                     <div className="w-full h-full">
-                      <Swiper className={`gallery gallery-${i} bg-white rounded-md`} {...galleryOptions(e)} onSlideChange={gOnSlideChange} onSwiper={gOnSwiper}>
+                    <Swiper className={`gallery gallery-${i} bg-white rounded-md`} {...galleryOptions(e)} onSlideChange={gOnSlideChange} onSwiper={gOnSwiper}>
 
                         {e?.images.map((e, i) => {
                           return (
@@ -170,7 +293,7 @@ export default function Shoes() {
                     <Link href="#" className="more-button absolute z-10 -bottom-12 -right-12 m-4 inline-block rounded-md bg-slate-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-600 focus:bg-indigo-600">Ver</Link>
                   </div>
                   <div className="w-2/12 h-3/6">
-                    <Swiper className={`thumbs thumbs-${i}`} {...thumbsOptions(e)} onSlideChange={tOnSlideChange} onSwiper={tOnSwiper}>
+                    <Swiper className={`thumbs thumbs-${i}`} {...thumbsOptions} onSlideChange={tOnSlideChange} onSwiper={tOnSwiper}>
 
                       {e?.images.map((e, i) => {
                         return (
