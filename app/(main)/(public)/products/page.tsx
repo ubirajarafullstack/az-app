@@ -20,6 +20,7 @@ import './locals.css';
 export default function Shoes() {
 
   const [hash, setHash] = useState('null');
+  const [mainContainer, setMainContainer] = useState<any>([]);
   const [galleryContainer, setGalleryContainer] = useState<any>([]);
   const [thumbsContainer, setThumbsContainer] = useState<any>([]);
 
@@ -91,27 +92,40 @@ export default function Shoes() {
     for (const key in galleryContainer) {
       const gallerySwiper = galleryContainer[key];
       const thumbsSwiper = thumbsContainer[key];
-
-      gallerySwiper.enable();
-
-      thumbsSwiper.enable();
+      
+      //gallerySwiper.enable();
+      
+      //thumbsSwiper.enable();
     }
-  }, [thumbsContainer, galleryContainer]);
+
+    if(galleryContainer[0]) {
+      console.log(galleryContainer[0])
+      const gallerySwiper = galleryContainer[0];
+      gallerySwiper.slideNext();
+    }
+
+  }, [thumbsContainer, galleryContainer, mainContainer]);
 
   const onSwiper = (swiper: any) => {
+    setMainContainer((main: any) => [...main, swiper]);
   };
 
   const gOnSwiper = (swiper: any) => {
     setGalleryContainer((gallery: any) => [...gallery, swiper]);
-    swiper.disable();
+    //swiper.disable();
   };
 
   const tOnSwiper = (swiper: any) => {
     setThumbsContainer((thumbs: any) => [...thumbs, swiper]);
-    swiper.disable();
+    //swiper.disable();
   };
 
   const onSlideChange = (swiper: any) => {
+    if(galleryContainer[swiper.activeIndex]) {
+      console.log(galleryContainer[swiper.activeIndex])
+      const gallerySwiper = galleryContainer[swiper.activeIndex];
+      gallerySwiper.slideNext();
+    }
   };
 
   const gOnSlideChange = (swiper: any) => {
