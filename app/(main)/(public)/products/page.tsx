@@ -127,7 +127,25 @@ export default function Shoes() {
 
   let products = data.flat();
 
-  if (hash === 'null') products.shift();
+  function sanitize(products: any) {
+    
+    products = products.filter((e: any) => e !== null);
+
+    function removeDuplicates(arr: any): any {
+      const uniqueIds = new Set(arr.map((e: any) => e.id));
+      return arr.filter((e: any) => {
+        if (uniqueIds.has(e.id)) {
+          uniqueIds.delete(e.id);
+          return true;
+        }
+        return false;
+      });
+    }
+
+    return removeDuplicates(products);
+  }
+
+  products = sanitize(products);
 
   return (
     <div className="h-screen flex justify-center items-center">
