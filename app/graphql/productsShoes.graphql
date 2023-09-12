@@ -50,3 +50,24 @@ query productShoesBySlug (
     ...fields
   }
 }
+
+query productsShoesWithPagination (
+  $first: Int, 
+  $skip: Int
+) {
+  productsConnection(first: $first, skip: $skip) {
+    edges {
+      cursor
+      node {
+        ...fields
+      }
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+      pageSize
+    }
+  }
+}
