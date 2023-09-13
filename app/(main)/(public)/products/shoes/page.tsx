@@ -149,7 +149,7 @@ export default function Shoes() {
     
     array = array.filter((e: any) => e !== null);
 
-    function removeDuplicates(arr: any): any {
+    function removeDuplicated(arr: any): any {
       const uniqueIds = new Set(arr.map((e: any) => e.id));
       return arr.filter((e: any) => {
         if (uniqueIds.has(e.id)) {
@@ -160,7 +160,7 @@ export default function Shoes() {
       });
     }
 
-    return removeDuplicates(array);
+    return removeDuplicated(array);
   }
 
   xproducts = sanitize(xproducts);

@@ -22,16 +22,44 @@ import './locals.css';
 
 export default function Products() {
   const [skipper, setSkipper] = useState(0);
-  
+
   let { data, isLoading, fetchNextPage, fetchPreviousPage, hasNextPage, hasPreviousPage, isFetchingNextPage, isFetchingPreviousPage } = useShoesInfinite(1, skipper);
 
   if (isLoading) return <Loading />;
 
   console.log('data from tsx', data);
 
+  function sanitize(pages: any) {
+    const products = pages.flatMap((page: any) => page.productsConnection.edges);
+
+    const uniqueIds = new Set();
+
+    const uniqueProducts = products.filter((product: any) => {
+      const id = product.node.id;
+      if (uniqueIds.has(id)) {
+        return false;
+      } else {
+        uniqueIds.add(id);
+        return true;
+      }
+    });
+
+    const removeDuplicated = uniqueProducts.map((product: any) => ({
+      productsConnection: {
+        edges: [product],
+        pageInfo: product.pageInfo,
+      },
+    }));
+
+    return removeDuplicated;
+  }
+
+  let xdata = sanitize(data?.pages);
+
   return (
-    <div className="mt-36">
-      {data?.pages.map((page, i) => (
+    <div className="pt-36">
+      {/* @ts-ignore */}
+      {xdata?.map((page, i) => (
         <ul key={i}>
           {/* @ts-ignore */}
           {page.productsConnection.edges.map((edge) => (
@@ -46,8 +74,8 @@ export default function Products() {
         {isFetchingNextPage
           ? 'loading more...'
           : hasNextPage
-          ? 'load more'
-          : 'nothing more to load'}
+            ? 'load more'
+            : 'nothing more to load'}
       </button>
     </div>
   )
