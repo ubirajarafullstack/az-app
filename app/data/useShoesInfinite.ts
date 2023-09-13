@@ -4,6 +4,8 @@ import { QueryKey, useInfiniteQuery } from '@tanstack/react-query';
 import { graphqlClient } from './hygraph';
 import { productsShoesWithPagination } from '../graphql/productsShoes.graphql';
 import { useShoesFirstProduct } from './useShoesFirstProduct';
+import { useState, useEffect } from 'react';
+import { skip } from 'node:test';
 
 type ProductType = Shoe;
 
@@ -76,25 +78,19 @@ type Variables = {
   skip: number;
 }
 
-export function useShoesInfinite(first: number) {
-  const skip = 0;
-  const bySize: Variables = {
-    first,
-    skip
-  }
-
-  async function products() {
+export function useShoesInfinite(first: number, skipper: number) {
+  async function products(skip = skipper) {
+    console.log(`Fetching page: ${skip}`); // Log the page number
+    let bySize: Variables = {
+      first,
+      skip
+    }
     const data = await graphqlClient.request<Products>(
       productsShoesWithPagination,
       bySize
     );
-
+    console.log(data); // Log the API response
     return data;
-
-    /* return {
-      data, // this is required
-      nextCursor: data.data.productsConnection.edges[data.data.productsConnection.edges.length - 1].cursor // this is optional
-    }; */
   }
 
   const {
@@ -107,12 +103,10 @@ export function useShoesInfinite(first: number) {
     isFetchingNextPage,
     isFetchingPreviousPage,
   } = useInfiniteQuery({
-    queryKey: ['productsInfinite'],
-    queryFn: products,
-    //queryFn: async ({ pageParam = 1 }) => products,
-    getNextPageParam: (_, pages) => { return pages.length + 1},
-    //getNextPageParam: (lastPage, allPages) => lastPage.nextCursor,
-    //initialData: firstProduct?.data.productsConnection.edges.map((e,i) => e.node)
+    queryKey: ['products'],
+    queryFn: () => products(skipper),
+    getNextPageParam: (lastPage, pages) => pages.length,
+    refetchOnWindowFocus: false
   });
   
   return {
@@ -125,7 +119,11 @@ export function useShoesInfinite(first: number) {
     isFetchingNextPage,
     isFetchingPreviousPage,
   };
-  /* const skip = 0;
+}
+
+
+
+/* const skip = 0;
   const bySize: Variables = {
     first,
     skip
@@ -179,4 +177,4 @@ export function useShoesInfinite(first: number) {
     isFetchingNextPage,
     status,
   }; */
-}
+

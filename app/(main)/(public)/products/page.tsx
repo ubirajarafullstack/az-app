@@ -21,27 +21,38 @@ import 'swiper/css/thumbs';
 import './locals.css';
 
 export default function Products() {
-
-  let { data, isLoading, fetchNextPage, fetchPreviousPage, hasNextPage, hasPreviousPage, isFetchingNextPage, isFetchingPreviousPage, } = useShoesInfinite(1);
+  const [skipper, setSkipper] = useState(0);
+  
+  let { data, isLoading, fetchNextPage, fetchPreviousPage, hasNextPage, hasPreviousPage, isFetchingNextPage, isFetchingPreviousPage } = useShoesInfinite(1, skipper);
 
   if (isLoading) return <Loading />;
 
   console.log('data from tsx', data);
 
   return (
-    <div>
+    <div className="mt-36">
       {data?.pages.map((page, i) => (
         <ul key={i}>
           {/* @ts-ignore */}
           {page.productsConnection.edges.map((edge) => (
-            <li key={edge.node.id}>{edge.node.name}</li>
+            <li key={edge.node.id}>{edge.node.id}</li>
           ))}
         </ul>
       ))}
+      <button onClick={() => {
+        fetchNextPage();
+        setSkipper(prevSkipper => prevSkipper + 1);
+      }} disabled={!hasNextPage || isFetchingNextPage}>
+        {isFetchingNextPage
+          ? 'loading more...'
+          : hasNextPage
+          ? 'load more'
+          : 'nothing more to load'}
+      </button>
     </div>
   )
-
 }
+
 
 /* return (
   <div>
