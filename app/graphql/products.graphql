@@ -1,0 +1,77 @@
+fragment fields on Product {
+  id
+  department
+  spirit
+  productCategory
+  productType {
+    __typename
+    ... on Book {
+      id
+      publisher
+      author
+      translator
+      dimension
+      bookcategory
+      why {
+        html
+      }
+    }
+    ... on Shoe {
+      id
+      brand
+      sizes
+      colors {
+        hex
+      }
+      shoeCategory
+      gender
+    }
+  }
+  name
+  slug
+  rating
+  price
+  description {
+    html
+  }
+  buttonType
+  buttonLabel
+  buttonLink
+  images {
+    id
+    url
+  }
+  highlights {
+    html
+  }
+}
+
+query products($first: Int) {
+  products(first: $first) {
+    ...fields
+  }
+}
+
+query productBySlug($slug: String) {
+  product(where: { slug: $slug }) {
+    ...fields
+  }
+}
+
+query productsWithPagination($first: Int, $skip: Int) {
+  productsConnection(first: $first, skip: $skip) {
+    edges {
+      cursor
+      node {
+        ...fields
+      }
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+      pageSize
+    }
+  }
+}

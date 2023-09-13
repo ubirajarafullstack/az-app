@@ -1,8 +1,11 @@
 'use client';
 
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { QueryKey, useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { graphqlClient } from './hygraph';
 import { productsShoesWithPagination } from '../graphql/productsShoes.graphql';
+import { useShoesFirstProduct } from './useShoesFirstProduct';
+import { useState, useEffect } from 'react';
+import { skip } from 'node:test';
 
 type ProductType = Shoe;
 
@@ -66,7 +69,7 @@ interface Data {
   productsConnection: ProductsConnection;
 }
 
-type Product = {
+type Products = {
   data: Data;
 };
 
@@ -75,26 +78,22 @@ type Variables = {
   skip: number;
 }
 
-export function useShoesFirstProduct(first: number) {
-  const skip = 0;
-  const bySize: Variables = {
-    first,
-    skip
-  }
-
-  async function products() {
-    const data = await graphqlClient.request<Product>(
+export function useShoesInfiniteWithInitialData(first: number, skipper: number) {
+  async function products(skip = skipper) {
+    console.log(`Fetching page: ${skip}`); // Log the page number
+    let limit: Variables = {
+      first,
+      skip
+    }
+    const data = await graphqlClient.request<Products>(
       productsShoesWithPagination,
-      bySize
+      limit
     );
-
+    console.log(data); // Log the API response
     return data;
-
-    /* return {
-      data, // this is required
-      nextCursor: data.data.productsConnection.edges[data.data.productsConnection.edges.length - 1].cursor // this is optional
-    }; */
   }
+
+  const product = useShoesFirstProduct(1);
 
   const {
     data,
@@ -106,12 +105,11 @@ export function useShoesFirstProduct(first: number) {
     isFetchingNextPage,
     isFetchingPreviousPage,
   } = useInfiniteQuery({
-    queryKey: ['firstproduct'],
-    queryFn: products,
-    //queryFn: async ({ pageParam = 1 }) => products,
-    getNextPageParam: (_, pages) => { return pages.length + 1},
-    //getNextPageParam: (lastPage, allPages) => lastPage.nextCursor,
-    //initialData: firstProduct?.data.productsConnection.edges.map((e,i) => e.node)
+    queryKey: ['products'],
+    queryFn: () => products(skipper),
+    getNextPageParam: (lastPage, pages) => pages.length,
+    refetchOnWindowFocus: false,
+    initialData: () => product.data, // Use product.data instead of product
   });
   
   return {
@@ -124,7 +122,11 @@ export function useShoesFirstProduct(first: number) {
     isFetchingNextPage,
     isFetchingPreviousPage,
   };
-  /* const skip = 0;
+}
+
+
+
+/* const skip = 0;
   const bySize: Variables = {
     first,
     skip
@@ -178,4 +180,4 @@ export function useShoesFirstProduct(first: number) {
     isFetchingNextPage,
     status,
   }; */
-}
+

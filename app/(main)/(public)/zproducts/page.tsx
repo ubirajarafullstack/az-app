@@ -19,13 +19,14 @@ import 'swiper/css/free-mode';
 import 'swiper/css/thumbs';
 
 import './locals.css';
+import { useShoesInfiniteWithInitialData } from '@/app/data/useShoesInfiniteWithInitialData';
 
 export default function Products() {
   const [skipper, setSkipper] = useState(0);
 
-  let { data, isLoading, fetchNextPage, fetchPreviousPage, hasNextPage, hasPreviousPage, isFetchingNextPage, isFetchingPreviousPage } = useShoesInfinite(1, skipper);
+  let { data, isLoading, fetchNextPage, fetchPreviousPage, hasNextPage, hasPreviousPage, isFetchingNextPage, isFetchingPreviousPage } = useShoesInfiniteWithInitialData(1, skipper);
 
-  if (isLoading) return <Loading />;
+  if (isLoading || isFetchingNextPage) return <Loading />;
 
   console.log('data from tsx', data);
 
