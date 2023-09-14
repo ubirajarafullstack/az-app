@@ -7,7 +7,7 @@ import { useShoe } from '@/app/data/useShoe';
 import { useShoes } from '@/app/data/useShoes';
 import { useShoesInfinite } from '@/app/data/useShoesInfinite';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Mousewheel, Keyboard, Pagination, Navigation, HashNavigation, FreeMode, Thumbs, Controller } from 'swiper/modules';
+import { Mousewheel, Keyboard, Pagination, Navigation, HashNavigation, FreeMode, Thumbs, Controller, Virtual } from 'swiper/modules';
 import { SwiperOptions } from 'swiper/types';
 import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
@@ -45,7 +45,7 @@ export default function Products() {
   );
 
   const commonOptions: SwiperOptions = {
-    modules: [Mousewheel, Keyboard, Pagination, Navigation, HashNavigation, FreeMode, Thumbs, Controller],
+    modules: [Mousewheel, Keyboard, Pagination, Navigation, HashNavigation, FreeMode, Thumbs, Controller, Virtual],
     direction: 'horizontal',
     slidesPerView: 1,
     spaceBetween: 50,
@@ -117,6 +117,26 @@ export default function Products() {
   const tOnSlideChange = (swiper: any) => {
   };
 
+  useEffect(() => {
+    if (location.hash) setHash(location.hash.substring(1));
+  }, []);
+
+  useEffect(() => {
+    for (const key in galleryContainer) {
+      const gallerySwiper = galleryContainer[key];
+      const thumbsSwiper = thumbsContainer[key];
+
+      //gallerySwiper.enable();
+      //thumbsSwiper.enable();
+    }
+
+    if (galleryContainer[0]) {
+      const gallerySwiper = galleryContainer[0];
+      gallerySwiper.slideNext();
+    }
+
+  }, [thumbsContainer, galleryContainer, mainContainer]);
+
   let {
     data,
     isLoading,
@@ -133,72 +153,79 @@ export default function Products() {
   console.log('data from tsx', hasNextPage);
 
   return (
-    <div className="h-screen flex justify-center items-center">
-      <Swiper {...mainOptions} className="main" onSlideChange={onSlideChange} onSwiper={mOnSwiper}>
+    <>
+      <div className="h-[calc(100vh-3rem)] flex justify-center items-center">
+        <Swiper {...mainOptions} className="main" onSlideChange={onSlideChange} onSwiper={mOnSwiper}>
+          {data && (
+            <>
+              {
+                data?.pages.map((page, index) => (
+                  <>
+                    <div key={index}>
+                      {page.map((edge, index) => {
 
-        {data && (
-          <>
-            {
-              data?.pages.map((page, index) => (
-
-                <div key={index}>
-
-                  {page.map((edge, index) => {
-
-                    return (
-                      <SwiperSlide className="flex flex-col justify-center items-center" key={index} data-hash={edge.node.slug}>
-                        <div className="w-11/12 flex flex-col lg:flex-row-reverse">
-                          <div className="w-full h-96 gap-4 flex lg:w-7/12">
-                            <div className="relative w-10/12">
-                              <div className="w-full h-full">
-                                <Swiper className={`gallery gallery-${index} bg-white rounded-md`} {...galleryOptions(index)} onSlideChange={gOnSlideChange} onSwiper={gOnSwiper}>
-                                  {edge.node.images.map((e: any, i: any) => {
-                                    return (
-                                      <SwiperSlide className="bg-white p-6 rounded-md flex flex-row justify-center items-center" key={i}>
-                                        <img className="block object-contain" src={e.url} alt="" />
-                                      </SwiperSlide>
-                                    )
-                                  })}
-                                </Swiper>
+                        return (
+                          <SwiperSlide className="flex flex-col justify-center items-center" key={index} data-hash={edge.node.slug}>
+                            <div className="w-11/12 flex flex-col lg:flex-row-reverse">
+                              <div className="w-full h-96 gap-4 flex lg:w-7/12">
+                                <div className="relative w-10/12">
+                                  <div className="w-full h-full">
+                                    <Swiper className={`gallery gallery-${index} bg-white rounded-md`} {...galleryOptions(index)} onSlideChange={gOnSlideChange} onSwiper={gOnSwiper}>
+                                      {edge.node.images.map((e: any, i: any) => {
+                                        return (
+                                          <SwiperSlide className="bg-white p-6 rounded-md flex flex-row justify-center items-center" key={i}>
+                                            <img className="block object-contain" src={e.url} alt="" />
+                                          </SwiperSlide>
+                                        )
+                                      })}
+                                    </Swiper>
+                                  </div>
+                                  <Link href="#" className="more-button absolute z-10 -bottom-12 -right-12 m-4 inline-block rounded-md bg-slate-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-600 focus:bg-indigo-600">Ver</Link>
+                                </div>
+                                <div className="w-2/12 h-3/6">
+                                  <Swiper className={`thumbs thumbs-${index}`} {...thumbsOptions(index)} onSlideChange={tOnSlideChange} onSwiper={tOnSwiper}>
+                                    {edge.node.images.map((e: any, i: any) => {
+                                      return (
+                                        <SwiperSlide className="bg-white rounded-md opacity-50 flex flex-col justify-center items-center" key={i}>
+                                          <img className="w-full h-full block object-contain" src={e.url} alt="" />
+                                        </SwiperSlide>
+                                      )
+                                    })}
+                                  </Swiper>
+                                </div>
                               </div>
-                              <Link href="#" className="more-button absolute z-10 -bottom-12 -right-12 m-4 inline-block rounded-md bg-slate-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-600 focus:bg-indigo-600">Ver</Link>
+
+                              <div className="info w-10/12 lg:w-5/12">
+                                <h1 className="m-4 md:text-2xl lg:text-2xl">{edge.node.name}</h1>
+                                <h2 className="m-4 md:text-2xl lg:text-2xl">{edge.node.price}</h2>
+
+                                <Link href="#" className="more-button m-4 inline-block rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-600 focus:bg-indigo-600">Veja Mais</Link>
+                              </div>
+
                             </div>
-                            <div className="w-2/12 h-3/6">
-                              <Swiper className={`thumbs thumbs-${index}`} {...thumbsOptions(index)} onSlideChange={tOnSlideChange} onSwiper={tOnSwiper}>
-                                {edge.node.images.map((e: any, i: any) => {
-                                  return (
-                                    <SwiperSlide className="bg-white rounded-md opacity-50 flex flex-col justify-center items-center" key={i}>
-                                      <img className="w-full h-full block object-contain" src={e.url} alt="" />
-                                    </SwiperSlide>
-                                  )
-                                })}
-                              </Swiper>
-                            </div>
-                          </div>
+                          </SwiperSlide>
+                        )
 
-                          <div className="info w-10/12 lg:w-5/12">
-                            <h1 className="m-4 md:text-2xl lg:text-2xl">{edge.node.name}</h1>
-                            <h2 className="m-4 md:text-2xl lg:text-2xl">{edge.node.price}</h2>
+                      })}
 
-                            <Link href="#" className="more-button m-4 inline-block rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-600 focus:bg-indigo-600">Veja Mais</Link>
-                          </div>
-
-                        </div>
-                      </SwiperSlide>
-                    )
-
-                  })}
-
-                </div>
-
-
-              ))
-            }
-          </>
-        )}
-
-      </Swiper>
-    </div>
+                    </div>
+                  </>
+                ))
+              }
+            </>
+          )}
+        </Swiper>
+      </div>
+      <button onClick={() => {
+        fetchNextPage();
+      }} disabled={!hasNextPage || isFetchingNextPage}>
+        {isFetchingNextPage
+          ? 'loading more...'
+          : (data?.pages.length ?? 0) < 4
+            ? 'load more'
+            : 'nothing more to load'}
+      </button>
+    </>
   )
 
 }
