@@ -1,6 +1,6 @@
 import { InfiniteData, useInfiniteQuery } from '@tanstack/react-query';
 import { graphqlClient } from './hygraph';
-import { productsWithPagination } from '../graphql/products.graphql';
+import { productsByDesc } from '../graphql/products.graphql';
 
 type ProductType = Book | Shoe;
 
@@ -117,14 +117,15 @@ export function useProducts(limit: number) {
       limit
     }
     
-    const data = await graphqlClient.request<InfiniteData<Data>>(
-      productsWithPagination,
+    const data = await graphqlClient.request<Data>(
+      productsByDesc,
       variables
     );
 
+    console.log('data from hook ', data)
     //console.log('pages from hoook', data.productsConnection.edges.slice((page - 1) * 2, page * 2));
     
-    // @ts-expect-error
+    
     return data.productsConnection.edges.slice((page - 1) * 1, page * 1);
     //return data;
   }
@@ -155,6 +156,7 @@ export function useProducts(limit: number) {
     isLoading,
     fetchNextPage,
     fetchPreviousPage,
+    // @ts-ignore
     hasNextPage: hasNextPage && data?.pages[data?.pages.length - 1].length > 0,
     hasPreviousPage,
     isFetchingNextPage,

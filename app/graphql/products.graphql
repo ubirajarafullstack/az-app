@@ -58,8 +58,8 @@ query productBySlug($slug: String) {
   }
 }
 
-query productsWithPagination($limit: Int) {
-  productsConnection(last: $limit) {
+query productsByDesc($limit: Int) {
+  productsConnection(last: $limit, orderBy: publishedAt_DESC) {
     edges {
       cursor
       node {
