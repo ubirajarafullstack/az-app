@@ -46,8 +46,8 @@ fragment fields on Product {
   }
 }
 
-query products($first: Int) {
-  products(first: $first) {
+query products($limit: Int) {
+  products(first: $limit) {
     ...fields
   }
 }
@@ -58,8 +58,8 @@ query productBySlug($slug: String) {
   }
 }
 
-query productsWithPagination($first: Int, $skip: Int) {
-  productsConnection(first: $first, skip: $skip) {
+query productsWithPagination($limit: Int) {
+  productsConnection(last: $limit) {
     edges {
       cursor
       node {
