@@ -26,6 +26,7 @@ import { InfiniteData } from '@tanstack/react-query';
 export default function Products() {
 
   const [hash, setHash] = useState('null');
+  const [ currentpage, setCurrentpage] = useState(0);
   const [mainContainer, setMainContainer] = useState<any>([]);
   const [galleryContainer, setGalleryContainer] = useState<any>([]);
   const [thumbsContainer, setThumbsContainer] = useState<any>([]);
@@ -117,6 +118,17 @@ export default function Products() {
   const tOnSlideChange = (swiper: any) => {
   };
 
+  let {
+    data,
+    isLoading,
+    fetchNextPage,
+    fetchPreviousPage,
+    hasNextPage,
+    hasPreviousPage,
+    isFetchingNextPage,
+    isFetchingPreviousPage
+  } = useProducts(4);
+
   useEffect(() => {
     if (location.hash) setHash(location.hash.substring(1));
   }, []);
@@ -135,35 +147,39 @@ export default function Products() {
       gallerySwiper.slideNext();
     }
 
-  }, [thumbsContainer, galleryContainer, mainContainer]);
+    //console.log('main?', mainContainer)
 
-  let {
-    data,
-    isLoading,
-    fetchNextPage,
-    fetchPreviousPage,
-    hasNextPage,
-    hasPreviousPage,
-    isFetchingNextPage,
-    isFetchingPreviousPage
-  } = useProducts(4);
+    if (mainContainer[0]) {
+      const mainSwiper = mainContainer[0];
+      mainSwiper.slideTo(data?.pageParams.length? data.pageParams.length: 0);
+    }
+    
+  }, [thumbsContainer, galleryContainer, mainContainer, data]);
 
-  if (isLoading || isFetchingNextPage) return <Loading />;
 
-  console.log('data from tsx', hasNextPage);
+  /* useEffect(() => {
+
+    console.log('from use effect', data?.pageParams.length)
+    
+  }, [data]); */
+
+
+  if (isLoading) return <Loading />;
+
+  //console.log('data from tsx', data);
 
   return (
     <>
       <div className="h-[calc(100vh-3rem)] flex justify-center items-center">
-        <Swiper {...mainOptions} className="main" onSlideChange={onSlideChange} onSwiper={mOnSwiper}>
           {data && (
+        <Swiper {...mainOptions} className="main" onSlideChange={onSlideChange} onSwiper={mOnSwiper}>
             <>
               {
                 data?.pages.map((page, index) => (
                   <>
                     <div key={index}>
                       {page.map((edge, index) => {
-
+                        //console.log('index', index)
                         return (
                           <SwiperSlide className="flex flex-col justify-center items-center" key={index} data-hash={edge.node.slug}>
                             <div className="w-11/12 flex flex-col lg:flex-row-reverse">
@@ -213,11 +229,14 @@ export default function Products() {
                 ))
               }
             </>
-          )}
         </Swiper>
+          )}
       </div>
       <button onClick={() => {
         fetchNextPage();
+        //setMainContainer([])
+        setGalleryContainer([])
+        setThumbsContainer([])
       }} disabled={!hasNextPage || isFetchingNextPage}>
         {isFetchingNextPage
           ? 'loading more...'
@@ -229,32 +248,3 @@ export default function Products() {
   )
 
 }
-
-
-
-
-
-/* 
-    return (
-      <div className="pt-36">
-        {data?.pages.map((page, i) => (
-          <ul key={i}>
-            {/* @ts-expect-error }
-            {page.map((edge) => (
-              <li key={edge.node.id}>{edge.node.name}</li>
-            ))}
-          </ul>
-        ))}
-        <button onClick={() => {
-          fetchNextPage();
-        }} disabled={!hasNextPage || isFetchingNextPage}>
-          {isFetchingNextPage
-            ? 'loading more...'
-            : (data?.pages.length ?? 0) < 4
-            ? 'load more'
-            : 'nothing more to load'}
-        </button>
-      </div>
-    )
-  
-   */
