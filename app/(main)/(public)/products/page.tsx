@@ -171,7 +171,7 @@ export default function Products() {
 
   return (
     <>
-      <div className="h-[calc(100vh-3rem)] flex justify-center items-center">
+      <div className="relative h-screen flex justify-center items-center">
         {data && (
           <Swiper {...mainOptions} className="main" onSlideChange={onSlideChange} onSwiper={mOnSwiper}>
             <>
@@ -197,7 +197,7 @@ export default function Products() {
                                       })}
                                     </Swiper>
                                   </div>
-                                  <Link href="#" className="more-button absolute z-10 -bottom-12 -right-12 m-4 inline-block rounded-md bg-slate-400 hover:bg-indigo-600 focus:bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm">Ver</Link>
+                                  <Link href="#" className="more-button absolute z-10 -bottom-12 -right-12 m-4 inline-block px-3 py-2 rounded-md bg-slate-400 hover:bg-indigo-600 focus:bg-indigo-600 text-sm font-semibold text-white shadow-sm">Ver</Link>
                                 </div>
                                 <div className="w-2/12 h-3/6">
                                   <Swiper className={`thumbs thumbs-${index}`} {...thumbsOptions(index)} onSlideChange={tOnSlideChange} onSwiper={tOnSwiper}>
@@ -216,7 +216,7 @@ export default function Products() {
                                 <h1 className="m-4 md:text-2xl lg:text-2xl">{edge.node.name}</h1>
                                 <h2 className="m-4 md:text-2xl lg:text-2xl">{edge.node.price}</h2>
 
-                                <Link href="#" className="more-button m-4 inline-block rounded-md bg-black hover:bg-indigo-600 focus:bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm">Veja Mais</Link>
+                                <Link href="#" className="more-button m-4 inline-block px-3 py-2 rounded-md bg-black hover:bg-indigo-600 focus:bg-indigo-600 text-sm font-semibold text-white shadow-sm">Veja Mais</Link>
                               </div>
 
                             </div>
@@ -232,28 +232,31 @@ export default function Products() {
             </>
           </Swiper>
         )}
+
+        <div className="absolute z-20 bottom-0 left-0 p-4 flex flex-col w-full">
+          <button
+            className="loading-more-button self-center justify-self-center flex items-center justify-center px-3 py-2 rounded-md bg-indigo-600 hover:bg-indigo-600 focus:bg-indigo-600 font-semibold text-white text-sm shadow-sm"
+            onClick={() => {
+              fetchNextPage();
+              //setMainContainer([])
+              setGalleryContainer([])
+              setThumbsContainer([])
+            }}
+            disabled={!hasNextPage || isFetchingNextPage}
+          >
+            {isFetchingNextPage
+              ? (
+                <>
+                  <SpinnerSmall /> {/* Replace this with your spinner component */}
+                  <span className="inline-block ml-2">Loading more</span>
+                </>
+              )
+              : (data?.pages.length ?? 0) < 4
+                ? 'Load more'
+                : 'Over'}
+          </button>
+        </div>
       </div>
-      <button
-        onClick={() => {
-          fetchNextPage();
-          //setMainContainer([])
-          setGalleryContainer([])
-          setThumbsContainer([])
-        }}
-        disabled={!hasNextPage || isFetchingNextPage}
-        className="loading-more-button bg-black hover:bg-indigo-600 focus:bg-indigo-600 text-white font-bold py-2 px-4 rounded flex items-center justify-center"
-      >
-        {isFetchingNextPage
-          ? (
-            <>
-              <SpinnerSmall /> {/* Replace this with your spinner component */}
-              <span className="inline-block ml-2">Loading more</span>
-            </>
-          )
-          : (data?.pages.length ?? 0) < 4
-            ? 'Load more'
-            : 'Nothing more to load'}
-      </button>
 
     </>
   )
