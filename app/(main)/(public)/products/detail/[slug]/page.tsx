@@ -78,7 +78,7 @@ export default function Detail({ params }: { params: { slug: string } }) {
   const { data, isLoading, error } = useProduct(params.slug);
 
   useEffect(() => {
-    
+
 
     if (galleryContainer[0]) {
       const gallerySwiper = galleryContainer[0];
@@ -115,7 +115,7 @@ export default function Detail({ params }: { params: { slug: string } }) {
                       {e?.images.map((e, i) => {
                         return (
                           <SwiperSlide className="bg-white p-6 rounded-md flex flex-row justify-center items-center" key={i}>
-                            <img className="block object-contain" src={e.url} alt="" />
+                            <img className="block object-contain max-h-full" src={e.url} alt="" />
                           </SwiperSlide>
                         )
                       })}
@@ -140,7 +140,7 @@ export default function Detail({ params }: { params: { slug: string } }) {
                 </div>
               </div>
 
-              <div className="info w-full lg:w-5/12">
+              <div className="info w-full lg:w-5/12 flex flex-col">
 
                 <div className="flex">
                   <div className="w-10/12 flex flex-col justify-between items-start sm:flex-row sm:items-center lg:items-start">
@@ -154,17 +154,49 @@ export default function Detail({ params }: { params: { slug: string } }) {
                   </div>
                 </div>
 
-                {/* <div>
-                {e?.productType.colors.map((e, i) => {
-                  return (
-                    <span key={i} className="block h-4 w-4" style={{ background: e.hex }}></span>
-                  )
-                })}
-              </div> */}
-
                 <div className="w-10/12 m-4" dangerouslySetInnerHTML={{ __html: e!.description.html }} />
 
-                <Link href="#" className="more-button m-4 inline-block rounded-md px-3 py-2 text-sm font-semibold text-black shadow-sm bg-white hover:bg-white focus:bg-white drop-shadow-2xl">{e?.buttonLabel}</Link>
+                {e.productCategory === 'Books' ? (
+                  <>
+                    <div className="m-4 grid gap-2 grid-cols-2 grid-rows-2">
+                      {/* @ts-ignore */}
+                      <p>Autor : {e.productType.author}</p>
+                      {/* @ts-ignore */}
+                      <p>Tradutor : {e.productType.translator}</p>
+                      {/* @ts-ignore */}
+                      <p>Dimensão : {e.productType.dimension}</p>
+                      {/* @ts-ignore */}
+                      <p>Categoria : {e.productType.bookcategory}</p>
+                    </div>
+                    {/* @ts-ignore */}
+                    <div className="m-4" dangerouslySetInnerHTML={{ __html: e.productType.why.html }} />
+                  </>
+                ) : (
+                  <div className="m-4 grid gap-2 grid-cols-2 grid-rows-2">
+                    {/* @ts-ignore */}
+                    <p>Marca : {e.productType.brand}</p>
+                    <ul className="flex">
+                      <li>Tamanho :</li>
+                      {/* @ts-ignore */}
+                      {e.productType.sizes.map((size, index) => (
+                        <li className="p-[2px] bg-slate-200 mx-1" key={index}>{size}</li>
+                      ))}
+                    </ul>
+                    <ul className="flex items-center">
+                      <li>Cor :</li>
+                      {/* @ts-ignore */}
+                      {e.productType.colors.map((color, index) => (
+                        <li className="block w-4 h-4 rounded-full mx-1" key={index} style={{ background: color.hex }}></li>
+                      ))}
+                    </ul>
+                    {/* @ts-ignore */}
+                    <p>Categoria : {e.productType.shoeCategory}</p>
+                    {/* @ts-ignore */}
+                    <p>Gênero : {e.productType.gender}</p>
+                  </div>
+                )}
+
+                <Link href="#" className="more-button m-4 self-start rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm bg-blue-600 hover:bg-white focus:bg-white drop-shadow-2xl">{e?.buttonLabel}</Link>
                 <div className="m-4" dangerouslySetInnerHTML={{ __html: e!.highlights.html }} />
 
               </div>
