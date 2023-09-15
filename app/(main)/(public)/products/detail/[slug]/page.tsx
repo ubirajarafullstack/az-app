@@ -82,16 +82,15 @@ export default function Shoes({ params }: { params: { slug: string } }) {
   product.push(data);
 
   return (
-    <div className="flex justify-center items-center">
+    <div className="pt-36 flex flex-col justify-center items-center">
       {product?.map((e, i) => {
         return (
-          <div className="w-11/12 pt-36 flex flex-col lg:flex-row-reverse" key={i}>
+          <>
+          <div className="w-11/12 p-4 text-xs">{e.department} / {e.spirit} / {e.productCategory}</div>
+          <div className="w-11/12 flex flex-col lg:flex-row-reverse" key={i}>
 
             <div className="w-full h-96 sm:h-[484px] gap-4 flex lg:w-7/12">
               <div className="w-10/12">
-                
-                
-                
                 
                 <div className="w-full h-full">
                   <Swiper className="gallery bg-white rounded-md" {...galleryOptions}>
@@ -107,9 +106,7 @@ export default function Shoes({ params }: { params: { slug: string } }) {
                   </Swiper>
                 </div>
 
-
               </div>
-
 
               <div className="w-2/12 h-3/6">
                 <Swiper className="thumbs" {...thumbsOptions} onSwiper={setThumbsContainer}>
@@ -153,9 +150,9 @@ export default function Shoes({ params }: { params: { slug: string } }) {
               <Link href="#" className="more-button m-4 inline-block rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-600 focus:bg-indigo-600">{e?.buttonLabel}</Link>
               <div className="m-4" dangerouslySetInnerHTML={{ __html: e!.highlights.html }} />
               
-  
             </div>
           </div>
+          </>
         )
       })}
     </div>
