@@ -47,7 +47,7 @@ fragment fields on Product {
 }
 
 query products($limit: Int) {
-  products(first: $limit) {
+  products(last: $limit) {
     ...fields
   }
 }
@@ -73,5 +73,11 @@ query productsByDesc($limit: Int) {
       endCursor
       pageSize
     }
+  }
+}
+
+query getTotalOfproducts($limit: Int) {
+  products(last: $limit) {
+    id
   }
 }

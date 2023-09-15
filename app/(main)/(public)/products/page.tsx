@@ -23,11 +23,10 @@ import { useShoesInfiniteWithInitialData } from '@/app/data/useShoesInfiniteWith
 import { useProducts } from '@/app/data/useProducts';
 import { InfiniteData } from '@tanstack/react-query';
 import SpinnerSmall from '@/app/components/SpinnerSmall';
+import { useGetTotalOfproducts } from '@/app/data/useGetTotalOfproducts';
 
 export default function Products() {
 
-  const [hash, setHash] = useState('null');
-  const [currentpage, setCurrentpage] = useState(0);
   const [mainContainer, setMainContainer] = useState<any>([]);
   const [galleryContainer, setGalleryContainer] = useState<any>([]);
   const [thumbsContainer, setThumbsContainer] = useState<any>([]);
@@ -66,8 +65,8 @@ export default function Products() {
   const mainOptions: SwiperOptions = {
     ...commonOptions,
     direction: 'vertical',
-    hashNavigation: { watchState: true },
-    watchSlidesProgress: true,
+    //hashNavigation: { watchState: false },
+    //watchSlidesProgress: false,
   }
 
   const galleryOptions: (i: number) => SwiperOptions = (i: number) => ({
@@ -119,6 +118,8 @@ export default function Products() {
   const tOnSlideChange = (swiper: any) => {
   };
 
+  const [totalOfproducts, setTotalOfproducts] = useState<number>(4);
+
   let {
     data,
     isLoading,
@@ -128,11 +129,7 @@ export default function Products() {
     hasPreviousPage,
     isFetchingNextPage,
     isFetchingPreviousPage
-  } = useProducts(4);
-
-  useEffect(() => {
-    if (location.hash) setHash(location.hash.substring(1));
-  }, []);
+  } = useProducts(totalOfproducts);
 
   useEffect(() => {
     for (const key in galleryContainer) {
@@ -157,14 +154,6 @@ export default function Products() {
 
   }, [thumbsContainer, galleryContainer, mainContainer, data]);
 
-
-  /* useEffect(() => {
-
-    console.log('from use effect', data?.pageParams.length)
-    
-  }, [data]); */
-
-
   if (isLoading) return <Loading />;
 
   //console.log('data from tsx', data);
@@ -182,7 +171,7 @@ export default function Products() {
                       {page.map((edge, index) => {
                         //console.log('index', index)
                         return (
-                          <SwiperSlide className="flex flex-col justify-center items-center" key={index} data-hash={edge.node.slug}>
+                          <SwiperSlide className="flex flex-col justify-center items-center" key={index}>
                             
                             <div className="w-11/12 p-4 text-xs">{edge.node.department} / {edge.node.spirit} / {edge.node.productCategory}</div>
                             <div className="w-11/12 flex flex-col lg:flex-row-reverse">
@@ -260,7 +249,7 @@ export default function Products() {
                   <span className="inline-block ml-2">Loading more</span>
                 </>
               )
-              : (data?.pages.length ?? 0) < 4
+              : (data?.pages.length ?? 0) < totalOfproducts
                 ? 'Load more'
                 : 'Over'}
           </button>
