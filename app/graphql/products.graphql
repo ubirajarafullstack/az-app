@@ -81,3 +81,13 @@ query getTotalOfproducts($limit: Int) {
     id
   }
 }
+
+query productsByCategory($word: ProductCategory) {
+  products(where: { productCategory: $word }) {
+    id
+    name
+    description {
+      html
+    }
+  }
+}
