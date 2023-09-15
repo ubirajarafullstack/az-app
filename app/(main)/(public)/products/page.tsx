@@ -194,7 +194,7 @@ export default function Products() {
                                       {edge.node.images.map((e: any, i: any) => {
                                         return (
                                           <SwiperSlide className="bg-white p-6 rounded-md flex flex-row justify-center items-center" key={i}>
-                                            <img className="block object-contain" src={e.url} alt="" />
+                                            <img className="block object-contain max-h-full" src={e.url} alt="" />
                                           </SwiperSlide>
                                         )
                                       })}
@@ -241,7 +241,7 @@ export default function Products() {
 
         <div className="absolute z-20 bottom-0 left-0 p-4 flex flex-col w-full">
           <button
-            className="loading-more-button self-center justify-self-center flex items-center justify-center px-3 py-2 rounded-md bg-indigo-600 hover:bg-indigo-600 focus:bg-indigo-600 font-semibold text-white text-sm shadow-sm"
+            className="loading-more-button self-center justify-self-center flex items-center justify-center px-3 py-2 rounded-md bg-white hover:bg-white focus:bg-white font-semibold text-black text-sm"
             onClick={() => {
               fetchNextPage();
               //setMainContainer([])
