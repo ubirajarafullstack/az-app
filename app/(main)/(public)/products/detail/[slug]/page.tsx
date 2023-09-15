@@ -150,7 +150,7 @@ export default function Detail({ params }: { params: { slug: string } }) {
                   </div>
 
                   <div className="w-2/12">
-                    <Link href="#" className="more-button m-4 inline-block rounded-md bg-slate-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-600 focus:bg-indigo-600">Go</Link>
+                    <Link href="/products" className="more-button m-4 inline-block rounded-md px-3 py-2 text-sm font-semibold text-black shadow-sm bg-white hover:bg-white focus:bg-white drop-shadow-2xl">Back</Link>
                   </div>
                 </div>
 
@@ -164,7 +164,7 @@ export default function Detail({ params }: { params: { slug: string } }) {
 
                 <div className="w-10/12 m-4" dangerouslySetInnerHTML={{ __html: e!.description.html }} />
 
-                <Link href="#" className="more-button m-4 inline-block rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-600 focus:bg-indigo-600">{e?.buttonLabel}</Link>
+                <Link href="#" className="more-button m-4 inline-block rounded-md px-3 py-2 text-sm font-semibold text-black shadow-sm bg-white hover:bg-white focus:bg-white drop-shadow-2xl">{e?.buttonLabel}</Link>
                 <div className="m-4" dangerouslySetInnerHTML={{ __html: e!.highlights.html }} />
 
               </div>
