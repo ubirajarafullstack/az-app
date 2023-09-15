@@ -11,7 +11,7 @@ interface Book {
   translator: string;
   dimension: string;
   bookcategory: string;
-  why: Description;
+  why: Why;
 }
 
 interface Shoe {
@@ -25,6 +25,10 @@ interface Shoe {
 
 interface Color {
   hex: string;
+}
+
+interface Why {
+  html: string;
 }
 
 interface Description {

@@ -150,7 +150,7 @@ export default function Detail({ params }: { params: { slug: string } }) {
                   </div>
 
                   <div className="w-2/12">
-                    <Link href="/products" className="more-button m-4 inline-block rounded-md px-3 py-2 text-sm font-semibold text-black shadow-sm bg-white hover:bg-white focus:bg-white drop-shadow-2xl">Back</Link>
+                    <Link href="/products" className="more-button m-4 inline-block rounded-md px-3 py-2 text-sm font-semibold text-black shadow-sm bg-white hover:drop-shadow drop-shadow-2xl">Back</Link>
                   </div>
                 </div>
 
@@ -169,7 +169,7 @@ export default function Detail({ params }: { params: { slug: string } }) {
                       <p>Categoria : {e.productType.bookcategory}</p>
                     </div>
                     {/* @ts-ignore */}
-                    <div className="m-4" dangerouslySetInnerHTML={{ __html: e.productType.why.html }} />
+                    <div className="w-10/12 m-4" dangerouslySetInnerHTML={{ __html: e.productType.why.html }} />
                   </>
                 ) : (
                   <div className="m-4 grid gap-2 grid-cols-2 grid-rows-2">
@@ -179,7 +179,7 @@ export default function Detail({ params }: { params: { slug: string } }) {
                       <li>Tamanho :</li>
                       {/* @ts-ignore */}
                       {e.productType.sizes.map((size, index) => (
-                        <li className="p-[2px] bg-slate-200 mx-1" key={index}>{size}</li>
+                        <li className="p-[2px] bg-black/10 mx-1" key={index}>{size}</li>
                       ))}
                     </ul>
                     <ul className="flex items-center">
@@ -196,7 +196,7 @@ export default function Detail({ params }: { params: { slug: string } }) {
                   </div>
                 )}
 
-                <Link href="#" className="more-button m-4 self-start rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm bg-blue-600 hover:bg-white focus:bg-white drop-shadow-2xl">{e?.buttonLabel}</Link>
+                <Link href="#" className="more-button m-4 self-start rounded-md px-3 py-2 text-sm font-semibold text-black shadow-sm bg-white hover:drop-shadow drop-shadow-2xl">{e?.buttonLabel}</Link>
                 <div className="m-4" dangerouslySetInnerHTML={{ __html: e!.highlights.html }} />
 
               </div>
