@@ -12,3 +12,11 @@
 .thumbs .swiper-slide-thumb-active {
   opacity: 1;
 }
+
+.swiper-pagination-bullet {
+  background: #555555;
+}
+
+.swiper-pagination-bullet-active {
+  background: #000000;
+}
