@@ -183,7 +183,7 @@ export default function Products() {
 
                                   <div className="w-full h-full">
                                     <Swiper className={`gallery gallery-${index} bg-white rounded-md`} {...galleryOptions(index)} onSlideChange={gOnSlideChange} onSwiper={gOnSwiper}>
-                                      {edge.node.images.map((e: any, i: any) => {
+                                      {edge.node.images.map((e, i) => {
                                         return (
                                           <SwiperSlide className="bg-white p-6 rounded-md flex flex-row justify-center items-center" key={i}>
                                             <img className="block object-contain max-h-full" src={e.url} alt="" />
@@ -193,12 +193,12 @@ export default function Products() {
                                     </Swiper>
                                   </div>
 
-                                  <Link href="#" className="more-button absolute z-10 -bottom-12 -right-12 m-4 inline-block px-3 py-2 rounded-md bg-white hover:bg-white focus:bg-white text-sm font-semibold text-black drop-shadow-2xl">Ver</Link>
+                                  <Link href={`/products/detail/${edge.node.slug}`} className="more-button absolute z-10 -bottom-12 -right-12 m-4 inline-block px-3 py-2 rounded-md bg-white hover:bg-white focus:bg-white text-sm font-semibold text-black drop-shadow-2xl">Ver</Link>
                                 </div>
 
                                 <div className="w-2/12 h-3/6">
                                   <Swiper className={`thumbs thumbs-${index}`} {...thumbsOptions(index)} onSlideChange={tOnSlideChange} onSwiper={tOnSwiper}>
-                                    {edge.node.images.map((e: any, i: any) => {
+                                    {edge.node.images.map((e, i) => {
                                       return (
                                         <SwiperSlide className="bg-white rounded-md opacity-50 flex flex-col justify-center items-center" key={i}>
                                           <img className="w-full h-full block object-contain" src={e.url} alt="" />
@@ -214,7 +214,7 @@ export default function Products() {
                                 <h1 className="m-4 md:text-2xl lg:text-2xl">{edge.node.name}</h1>
                                 <h2 className="m-4 md:text-2xl lg:text-2xl">{edge.node.price}</h2>
 
-                                <Link href="#" className="more-button m-4 inline-block px-3 py-2 rounded-md bg-white hover:bg-white focus:bg-white text-sm font-semibold text-black drop-shadow-2xl">Veja Mais</Link>
+                                <Link href={`/products/detail/${edge.node.slug}`} className="more-button m-4 inline-block px-3 py-2 rounded-md bg-white hover:bg-white focus:bg-white text-sm font-semibold text-black drop-shadow-2xl">Veja Mais</Link>
                               </div>
 
                             </div>

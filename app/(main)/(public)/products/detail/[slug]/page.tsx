@@ -7,7 +7,7 @@ import { useProductsShoesDetail } from '@/app/data/useProductsShoesDetail';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Mousewheel, Keyboard, Pagination, Navigation, HashNavigation, FreeMode, Thumbs } from 'swiper/modules';
 import { SwiperOptions } from 'swiper/types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import 'swiper/css';
@@ -19,10 +19,11 @@ import 'swiper/css/thumbs';
 import './locals.css';
 import { useProduct } from '@/app/data/useProduct';
 
-export default function Shoes({ params }: { params: { slug: string } }) {
+export default function Detail({ params }: { params: { slug: string } }) {
 
   if (!params) redirect('/shoes/product');
 
+  const [galleryContainer, setGalleryContainer] = useState<any>([]);
   const [thumbsContainer, setThumbsContainer] = useState<any>(null);
 
   const commonOptions: SwiperOptions = {
@@ -69,7 +70,23 @@ export default function Shoes({ params }: { params: { slug: string } }) {
     watchSlidesProgress: true,
   }
 
+  const gOnSwiper = (swiper: any) => {
+    setGalleryContainer((gallery: any) => [...gallery, swiper]);
+    //swiper.disable();
+  };
+
   const { data, isLoading, error } = useProduct(params.slug);
+
+  useEffect(() => {
+    
+
+    if (galleryContainer[0]) {
+      const gallerySwiper = galleryContainer[0];
+      gallerySwiper.slideNext();
+    }
+
+
+  }, [thumbsContainer, galleryContainer]);
 
   if (isLoading) return <Loading />;
   if (error) console.log(error);
@@ -93,7 +110,7 @@ export default function Shoes({ params }: { params: { slug: string } }) {
                 <div className="w-10/12">
 
                   <div className="w-full h-full">
-                    <Swiper className="gallery bg-white rounded-md" {...galleryOptions}>
+                    <Swiper className="gallery bg-white rounded-md" {...galleryOptions} onSwiper={gOnSwiper}>
 
                       {e?.images.map((e, i) => {
                         return (
