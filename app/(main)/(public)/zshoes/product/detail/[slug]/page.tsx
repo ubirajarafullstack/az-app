@@ -80,10 +80,14 @@ export default function Shoes({ params }: { params: { slug: string } }) {
     <div className="flex justify-center items-center">
       {product?.map((e, i) => {
         return (
-          <div className="w-11/12 mt-36 flex flex-col lg:flex-row-reverse" key={i}>
+          <div className="w-11/12 pt-36 flex flex-col lg:flex-row-reverse" key={i}>
 
             <div className="w-full h-96 sm:h-[484px] gap-4 flex lg:w-7/12">
               <div className="w-10/12">
+                
+                
+                
+                
                 <div className="w-full h-full">
                   <Swiper className="gallery bg-white rounded-md" {...galleryOptions}>
 
@@ -100,6 +104,8 @@ export default function Shoes({ params }: { params: { slug: string } }) {
 
 
               </div>
+
+
               <div className="w-2/12 h-3/6">
                 <Swiper className="thumbs" {...thumbsOptions} onSwiper={setThumbsContainer}>
 

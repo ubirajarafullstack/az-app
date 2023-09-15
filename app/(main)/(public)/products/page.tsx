@@ -184,8 +184,11 @@ export default function Products() {
                         return (
                           <SwiperSlide className="flex flex-col justify-center items-center" key={index} data-hash={edge.node.slug}>
                             <div className="w-11/12 flex flex-col lg:flex-row-reverse">
-                              <div className="w-full h-96 gap-4 flex lg:w-7/12">
+                              <div className="w-full h-96 sm:h-[484px] gap-4 flex lg:w-7/12">
+
                                 <div className="relative w-10/12">
+
+
                                   <div className="w-full h-full">
                                     <Swiper className={`gallery gallery-${index} bg-white rounded-md`} {...galleryOptions(index)} onSlideChange={gOnSlideChange} onSwiper={gOnSwiper}>
                                       {edge.node.images.map((e: any, i: any) => {
@@ -197,8 +200,10 @@ export default function Products() {
                                       })}
                                     </Swiper>
                                   </div>
+
                                   <Link href="#" className="more-button absolute z-10 -bottom-12 -right-12 m-4 inline-block px-3 py-2 rounded-md bg-slate-400 hover:bg-indigo-600 focus:bg-indigo-600 text-sm font-semibold text-white shadow-sm">Ver</Link>
                                 </div>
+
                                 <div className="w-2/12 h-3/6">
                                   <Swiper className={`thumbs thumbs-${index}`} {...thumbsOptions(index)} onSlideChange={tOnSlideChange} onSwiper={tOnSwiper}>
                                     {edge.node.images.map((e: any, i: any) => {
@@ -210,6 +215,7 @@ export default function Products() {
                                     })}
                                   </Swiper>
                                 </div>
+
                               </div>
 
                               <div className="info w-10/12 lg:w-5/12">
