@@ -23,9 +23,10 @@ import { useShoesInfiniteWithInitialData } from '@/app/data/useShoesInfiniteWith
 import { useProducts } from '@/app/data/useProducts';
 import { InfiniteData } from '@tanstack/react-query';
 import SpinnerSmall from '@/app/components/SpinnerSmall';
-import { useGetTotalOfproducts } from '@/app/data/useGetTotalOfproducts';
 
-export default function Products() {
+import { useProductsByCategory } from '@/app/data/useProductsByCategory';
+
+export default function ProductsByCategory({ params }: { params: { name: string } }) {
 
   const [mainContainer, setMainContainer] = useState<any>([]);
   const [galleryContainer, setGalleryContainer] = useState<any>([]);
@@ -118,6 +119,10 @@ export default function Products() {
   const tOnSlideChange = (swiper: any) => {
   };
 
+  function capitalizeFirstLetter(txt: string) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  }
+
   let {
     data,
     totalProducts,
@@ -128,23 +133,14 @@ export default function Products() {
     hasPreviousPage,
     isFetchingNextPage,
     isFetchingPreviousPage
-  } = useProducts(99);
+  } = useProductsByCategory(99, capitalizeFirstLetter(params.name));
 
   useEffect(() => {
-    for (const key in galleryContainer) {
-      const gallerySwiper = galleryContainer[key];
-      const thumbsSwiper = thumbsContainer[key];
-
-      //gallerySwiper.enable();
-      //thumbsSwiper.enable();
-    }
 
     if (galleryContainer[0]) {
       const gallerySwiper = galleryContainer[0];
       gallerySwiper.slideNext();
     }
-
-    //console.log('main?', mainContainer)
 
     if (mainContainer[0]) {
       const mainSwiper = mainContainer[0];
@@ -241,18 +237,21 @@ export default function Products() {
             }}
             disabled={!hasNextPage || isFetchingNextPage}
           >
-            {isFetchingNextPage
-              ? (
-                <>
-                  <SpinnerSmall /> {/* Replace this with your spinner component */}
-                  <span className="inline-block ml-2">Loading more</span>
-                </>
-              )
-              : (data?.pages.length ?? 0) < totalProducts
-                ? 'Load more'
-                : 'Over'}
+            {isLoading
+              ? 'Loading...'
+              : isFetchingNextPage
+                ? (
+                  <>
+                    <SpinnerSmall /> {/* Replace this with your spinner component */}
+                    <span className="inline-block ml-2">Loading more</span>
+                  </>
+                )
+                : (data?.pages.length ?? 0) < totalProducts
+                  ? 'Load more'
+                  : 'Over'}
           </button>
         </div>
+
       </div>
 
     </>

@@ -1,7 +1,8 @@
 import { InfiniteData, useInfiniteQuery } from '@tanstack/react-query';
 import { graphqlClient } from './hygraph';
-import { productsByDesc } from '../graphql/products.graphql';
-import { useState} from 'react';
+import { productsByCategoryWithPagination } from '../graphql/products.graphql';
+import { useState } from 'react';
+
 type ProductType = Book | Shoe;
 
 interface Book {
@@ -111,20 +112,21 @@ interface Data {
 
 type Variables = {
   limit: number;
+  name: string;
 }
 
-export function useProducts(limit: number) {
+export function useProductsByCategory(limit: number, name: string) {
 
   const [totalProducts, setTotalProducts] = useState<number>(0);
   
   async function products(page: number) {
-    console.log('page from hook', page)
     let variables: Variables = {
-      limit
+      limit,
+      name
     }
     
     const data = await graphqlClient.request<Data>(
-      productsByDesc,
+      productsByCategoryWithPagination,
       variables
     );
 
@@ -143,7 +145,7 @@ export function useProducts(limit: number) {
     isFetchingNextPage,
     isFetchingPreviousPage,
   } = useInfiniteQuery({
-    queryKey: ['products'],
+    queryKey: ['productsByCategory'],
     queryFn: ({pageParam = 1}) => products(pageParam),
     getNextPageParam: (lastPage, pages) => {
       if (lastPage.length === 0) {

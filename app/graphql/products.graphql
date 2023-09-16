@@ -82,12 +82,30 @@ query getTotalOfproducts($limit: Int) {
   }
 }
 
-query productsByCategory($word: ProductCategory) {
-  products(where: { productCategory: $word }) {
-    id
-    name
-    description {
-      html
+query productsByCategory($limit: Int, $name: ProductCategory) {
+  products(last: $limit, where: { productCategory: $name }) {
+    ...fields
+  }
+}
+
+query productsByCategoryWithPagination($limit: Int, $name: ProductCategory) {
+  productsConnection(
+    last: $limit
+    orderBy: publishedAt_DESC
+    where: { productCategory: $name }
+  ) {
+    edges {
+      cursor
+      node {
+        ...fields
+      }
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+      pageSize
     }
   }
 }
