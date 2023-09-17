@@ -10,7 +10,7 @@ interface Book {
   author: string;
   translator: string;
   dimension: string;
-  bookcategory: string;
+  bookCategory: string;
   why: Why;
 }
 

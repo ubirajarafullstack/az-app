@@ -9,6 +9,12 @@
   display: flex;
 }
 
+.thumbs .swiper-wrapper {
+  box-sizing: border-box;
+  padding: 3px;
+}
+
 .thumbs .swiper-slide-thumb-active {
-  opacity: 1;
+  --tw-drop-shadow: drop-shadow(0 1px 1px rgb(0 0 0 / 0.2)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.2));
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }

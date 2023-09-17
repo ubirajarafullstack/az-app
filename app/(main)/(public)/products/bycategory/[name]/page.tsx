@@ -19,6 +19,7 @@ import 'swiper/css/free-mode';
 import 'swiper/css/thumbs';
 
 import './locals.css';
+import '@/app/(main)/(public)/products/detail/[slug]/locals.css';
 import { useShoesInfiniteWithInitialData } from '@/app/data/useShoesInfiniteWithInitialData';
 import { useProducts } from '@/app/data/useProducts';
 import { InfiniteData } from '@tanstack/react-query';
@@ -195,7 +196,7 @@ export default function ProductsByCategory({ params }: { params: { name: string 
                                   <Swiper className={`thumbs thumbs-${index}`} {...thumbsOptions(index)} onSlideChange={tOnSlideChange} onSwiper={tOnSwiper}>
                                     {edge.node.images.map((e, i) => {
                                       return (
-                                        <SwiperSlide className="bg-white rounded-md opacity-50 flex flex-col justify-center items-center" key={i}>
+                                        <SwiperSlide className="bg-white rounded-md drop-shadow-xl flex flex-col justify-center items-center" key={i}>
                                           <img className="w-full h-full block object-contain" src={e.url} alt="" />
                                         </SwiperSlide>
                                       )

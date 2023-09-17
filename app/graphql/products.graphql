@@ -11,7 +11,7 @@ fragment fields on Product {
       author
       translator
       dimension
-      bookcategory
+      bookCategory
       why {
         html
       }
