@@ -9,6 +9,10 @@
   display: flex;
 }
 
+.thumbs .swiper-slide img {
+  padding: 4px;
+}
+
 .thumbs .swiper-wrapper {
   box-sizing: border-box;
   padding: 3px;
