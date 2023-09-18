@@ -165,8 +165,7 @@ export default function Products() {
 
                               <div className="w-full h-96 sm:h-[484px] gap-4 flex lg:w-7/12">
 
-                                <div className="relative w-10/12">
-
+                                <div className="w-10/12">
 
                                   <div className="w-full h-full">
                                     <Swiper className={`gallery gallery-${index} bg-white rounded-md`} {...galleryOptions(index)} onSlideChange={galleryOnSlideChange} onSwiper={galleryOnSwiper}>
@@ -180,9 +179,6 @@ export default function Products() {
                                     </Swiper>
                                   </div>
 
-                                  <Link href={`/products/detail/${edge.node.slug}`} className="absolute z-10 -bottom-12 -right-12 more-button m-4 inline-block px-3 py-2 rounded-md bg-slate-400 hover:bg-indigo-600 font-semibold text-sm text-white shadow-sm">
-                                    Go
-                                  </Link>
                                 </div>
 
                                 <div className="w-2/12 h-3/6">
@@ -203,9 +199,26 @@ export default function Products() {
                                 <h1 className="m-4 md:text-2xl lg:text-2xl">{edge.node.name}</h1>
                                 <h2 className="m-4 md:text-2xl lg:text-2xl">{edge.node.price}</h2>
 
-                                <Link href={`/products/detail/${edge.node.slug}`} className="more-button m-4 inline-block px-3 py-2 rounded-md bg-slate-400 hover:bg-indigo-600 font-semibold text-sm text-white shadow-sm">
-                                  Go
+                                <Link 
+                                  href={`/products/detail/${edge.node.slug}`} 
+                                  className="
+                                  more-button 
+                                  m-4 
+                                  inline-block 
+                                  px-3 
+                                  py-2 
+                                  rounded-md 
+                                  bg-slate-400 
+                                  hover:bg-indigo-600 
+                                  font-semibold 
+                                  text-sm 
+                                  text-white 
+                                  shadow-sm
+                                  "
+                                >
+                                  Detalhes
                                 </Link>
+                                
                               </div>
 
                             </div>
