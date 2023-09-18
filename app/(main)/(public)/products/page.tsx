@@ -199,8 +199,8 @@ export default function Products() {
                                 <h1 className="m-4 md:text-2xl lg:text-2xl">{edge.node.name}</h1>
                                 <h2 className="m-4 md:text-2xl lg:text-2xl">{edge.node.price}</h2>
 
-                                <Link 
-                                  href={`/products/detail/${edge.node.slug}`} 
+                                <Link
+                                  href={`/products/detail/${edge.node.slug}`}
                                   className="
                                   more-button 
                                   m-4 
@@ -218,7 +218,7 @@ export default function Products() {
                                 >
                                   Detalhes
                                 </Link>
-                                
+
                               </div>
 
                             </div>
