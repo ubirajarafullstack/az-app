@@ -168,7 +168,7 @@ export default function Products() {
                                 <div className="w-10/12">
 
                                   <div className="w-full h-full">
-                                    <Swiper className={`gallery gallery-${index} bg-white rounded-md`} {...galleryOptions(index)} onSlideChange={galleryOnSlideChange} onSwiper={galleryOnSwiper}>
+                                    <Swiper className={`gallery gallery-${index} bg-white rounded-md`} {...galleryOptions(index)} onSwiper={galleryOnSwiper} onSlideChange={galleryOnSlideChange}>
                                       {edge.node.images.map((e, i) => {
                                         return (
                                           <SwiperSlide className="bg-white p-6 rounded-md flex flex-row justify-center items-center" key={i}>
@@ -235,7 +235,7 @@ export default function Products() {
           </Swiper>
         )}
 
-        <div className="absolute z-20 bottom-0 left-0 w-full p-6 flex flex-col">
+        <div className="absolute z-20 bottom-0 left-1/2 -translate-x-1/2 w-11/12 py-4 flex flex-col">
           <button
             className="
               loading-more-button 
@@ -244,7 +244,7 @@ export default function Products() {
               justify-center 
               px-3 py-2 
               rounded-md 
-              bg-indigo-600
+              bg-black
               hover:bg-white 
               focus:bg-white 
               disabled:bg-white 
@@ -276,6 +276,7 @@ export default function Products() {
                 : 'Rolagem'}
           </button>
         </div>
+
       </div>
 
     </>
