@@ -203,7 +203,7 @@ export default function Detail({ params }: { params: { slug: string } }) {
                     <h2 className="m-4 mb-0 text-sm font-bold">Motivos para ler</h2>
                     {/* @ts-ignore */}
                     <div className="m-4 mt-2 text-sm" dangerouslySetInnerHTML={{ __html: item.productType.why.html }} />
-                    
+
                     <h2 className="m-4 mb-0 text-sm font-bold">Sobre</h2>
                     <div className="m-4 mt-2 text-sm grid gap-2 grid-cols-2 grid-rows-2">
                       {/* @ts-ignore */}
@@ -218,40 +218,40 @@ export default function Detail({ params }: { params: { slug: string } }) {
                   </>
                 ) : (
                   <>
-                  <h2 className="m-4 mb-0 text-sm font-bold">Sobre</h2>
-                  <div className="m-4 mt-2 text-sm grid gap-2 grid-cols-2 grid-rows-2">
-                    {/* @ts-ignore */}
-                    <p>Marca : {item.productType.brand}</p>
-                    
-                    {/* @ts-ignore */}
-                    <p>Gênero : {item.productType.gender}</p>
-
-                    <p>Cores : 
+                    <h2 className="m-4 mb-0 text-sm font-bold">Sobre</h2>
+                    <div className="m-4 mt-2 text-sm grid gap-2 grid-cols-2 grid-rows-2">
                       {/* @ts-ignore */}
-                      {item.productType.colors.map((color, index) => (
-                        <span className="inline-block w-4 h-4 rounded-full mx-1" key={index} style={{ background: color.hex }}></span>
-                      ))}
-                    </p>
+                      <p>Marca : {item.productType.brand}</p>
 
-                    <p>Tamanhos : 
                       {/* @ts-ignore */}
-                      {item.productType.sizes.map((size, index) => (
-                        <span className="px-1" key={index}>{size}</span>
-                      ))}
-                    </p>
+                      <p>Gênero : {item.productType.gender}</p>
 
-                    {/* @ts-ignore */}
-                    <p>Categoria : {item.productType.shoeCategory}</p>
-                                        
-                  </div>
+                      <p>Cores :
+                        {/* @ts-ignore */}
+                        {item.productType.colors.map((color, index) => (
+                          <span className="inline-block w-4 h-4 rounded-full mx-1" key={index} style={{ background: color.hex }}></span>
+                        ))}
+                      </p>
+
+                      <p>Tamanhos :
+                        {/* @ts-ignore */}
+                        {item.productType.sizes.map((size, index) => (
+                          <span className="px-1" key={index}>{size}</span>
+                        ))}
+                      </p>
+
+                      {/* @ts-ignore */}
+                      <p>Categoria : {item.productType.shoeCategory}</p>
+
+                    </div>
                   </>
                 )}
 
                 <h2 className="m-4 mb-0 text-sm font-bold">Descrição</h2>
                 <div className="m-4 mt-2 text-sm" dangerouslySetInnerHTML={{ __html: item!.description.html }} />
 
-                <Link 
-                  href="#" 
+                <Link
+                  href="#"
                   className="
                     more-button 
                     m-4 self-start 
