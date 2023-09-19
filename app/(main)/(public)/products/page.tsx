@@ -165,7 +165,39 @@ export default function Products() {
                         return (
                           <SwiperSlide className="flex flex-col justify-center items-center" key={index}>
 
-                            <div className="w-11/12 p-4 text-xs">{item.department} / {item.spirit} / {item.productCategory}</div>
+                            <div className="breadcrumb w-11/12 p-4 text-xs">
+                              {item.department}
+                              <span className="inline-block px-1">/</span>
+                              {item.spirit}
+                              <span className="inline-block px-1">/</span>
+                              {item.productCategory}
+                              <span className="inline-block px-1">/</span>
+                              {item.productCategory === 'Books'
+                                ?
+                                (
+                                  <>
+                                    {/* @ts-ignore */}
+                                    {item.productType.bookCategory}
+                                    <span className="inline-block px-1">/</span>
+                                    {/* @ts-ignore */}
+                                    {item.productType.author}
+                                  </>
+                                )
+                                :
+                                (
+                                  <>
+                                    {/* @ts-ignore */}
+                                    {item.productType.shoeCategory}
+                                    <span className="inline-block px-1">/</span>
+                                    {/* @ts-ignore */}
+                                    {item.productType.brand}
+                                    <span className="inline-block px-1">/</span>
+                                    {/* @ts-ignore */}
+                                    {item.productType.gender}
+                                  </>
+                                )
+                              }
+                            </div>
                             <div className="w-11/12 flex flex-col lg:flex-row-reverse">
 
                               <div className="w-full h-96 sm:h-[484px] gap-4 flex lg:w-7/12">
@@ -213,8 +245,7 @@ export default function Products() {
                                     </div>
                                   </div>
 
-                                  <h2 className="m-4 mb-0 text-sm font-bold">Descrição</h2>
-                                  <div className="m-4 mt-2" dangerouslySetInnerHTML={{ __html: item!.description.html }} />
+                                  <div className="m-4 mt-2 text-sm" dangerouslySetInnerHTML={{ __html: item!.description.html }} />
 
                                   <Link
                                     href="#"

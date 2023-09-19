@@ -118,7 +118,7 @@ export default function Detail({ params }: { params: { slug: string } }) {
       {product?.map((item, index) => (
         <div className="pt-36 flex flex-col justify-center items-center" key={index}>
 
-          <div className="w-11/12 p-4 text-xs">
+          <div className="breadcrumb w-11/12 p-4 text-xs">
             {item.department}
             <span className="inline-block px-1">/</span>
             {item.spirit}
@@ -248,7 +248,7 @@ export default function Detail({ params }: { params: { slug: string } }) {
                 )}
 
                 <h2 className="m-4 mb-0 text-sm font-bold">Descrição</h2>
-                <div className="m-4 mt-2" dangerouslySetInnerHTML={{ __html: item!.description.html }} />
+                <div className="m-4 mt-2 text-sm" dangerouslySetInnerHTML={{ __html: item!.description.html }} />
 
                 <Link 
                   href="#" 
@@ -269,7 +269,7 @@ export default function Detail({ params }: { params: { slug: string } }) {
                 </Link>
 
                 <h2 className="m-4 mb-0 text-sm font-bold">Produto</h2>
-                <div className="highlights m-8 mt-0" dangerouslySetInnerHTML={{ __html: item!.highlights.html }} />
+                <div className="highlights m-8 mt-0 text-sm" dangerouslySetInnerHTML={{ __html: item!.highlights.html }} />
               </div>
 
               <div className="w-2/12">
@@ -284,8 +284,8 @@ export default function Detail({ params }: { params: { slug: string } }) {
                     text-black 
                     "
                 >
-                  <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M256 48C141.13 48 48 141.13 48 256s93.13 208 208 208 208-93.13 208-208S370.87 48 256 48zm62.63 304L296 374.63 177.37 256 296 137.37 318.63 160l-96 96z"></path>
+                  <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"></path>
                   </svg>
 
                 </button>
