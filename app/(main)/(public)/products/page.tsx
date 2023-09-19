@@ -252,10 +252,10 @@ export default function Products() {
                                     className="
                                       more-button 
                                       m-4 self-start 
-                                      rounded-md 
+                                      rounded-full 
                                       px-3 
                                       py-2 
-                                      bg-indigo-600 
+                                      bg-blue-500
                                       text-sm 
                                       font-semibold 
                                       text-white 
@@ -276,7 +276,7 @@ export default function Products() {
                                       p-[2px] 
                                       inline-block
                                       text-4xl 
-                                      text-black 
+                                      text-slate-400
                                       "
                                   >
                                     <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
@@ -309,19 +309,11 @@ export default function Products() {
               self-end flex 
               items-center 
               justify-center 
-              px-3 py-2 
-              rounded-md 
-              bg-black
-              hover:bg-white 
-              focus:bg-white 
-              disabled:bg-white 
-              font-semibold 
-              text-white 
-              hover:text-black 
-              focus:text-black 
-              disabled:text-black 
-              text-sm 
-              shadow-sm
+              text-slate-400 
+              hover:text-slate-400 
+              focus:text-slate-400 
+              disabled:text-slate-400
+              text-4xl
               "
             onClick={() => {
               fetchNextPage();
@@ -335,12 +327,11 @@ export default function Products() {
               ? (
                 <>
                   <SpinnerSmall />
-                  <span className="inline-block ml-2">Mais</span>
                 </>
               )
               : (data?.pages.length ?? 0) < totalProducts
-                ? 'Mais'
-                : 'Rolagem'}
+                ? <span dangerouslySetInnerHTML={{__html: '<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"></path></svg>'}}></span>
+                : <span dangerouslySetInnerHTML={{__html: '<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"></path></svg>'}}></span>}
           </button>
         </div>
 
