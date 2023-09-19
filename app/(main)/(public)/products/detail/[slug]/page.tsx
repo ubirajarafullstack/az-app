@@ -8,6 +8,7 @@ import { Mousewheel, Keyboard, Pagination, Navigation, HashNavigation, FreeMode,
 import { SwiperOptions } from 'swiper/types';
 import { useCallback, useEffect, useState } from 'react';
 import { useProduct } from '@/app/data/useProduct';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 import 'swiper/css';
@@ -21,7 +22,9 @@ import '../../products.css';
 
 export default function Detail({ params }: { params: { slug: string } }) {
 
-  if (!params) redirect('/products');
+  const router = useRouter()
+
+  if (!params) router.back();
 
   const [galleryContainer, setGalleryContainer] = useState<any>([]);
   const [thumbsContainer, setThumbsContainer] = useState<any>([]);
@@ -250,17 +253,17 @@ export default function Detail({ params }: { params: { slug: string } }) {
                 <Link 
                   href="#" 
                   className="
-                  more-button 
-                  m-4 self-start 
-                  rounded-md 
-                  px-3 
-                  py-2 
-                  bg-indigo-600 
-                  text-sm 
-                  font-semibold 
-                  text-white 
-                  shadow-sm 
-                  "
+                    more-button 
+                    m-4 self-start 
+                    rounded-md 
+                    px-3 
+                    py-2 
+                    bg-indigo-600 
+                    text-sm 
+                    font-semibold 
+                    text-white 
+                    shadow-sm 
+                    "
                 >
                   {item?.buttonLabel}
                 </Link>
@@ -270,23 +273,26 @@ export default function Detail({ params }: { params: { slug: string } }) {
               </div>
 
               <div className="w-2/12">
-                <Link
-                  href={`/products/detail/${item.slug}`}
+                <button
+                  onClick={() => router.back()}
                   className="
                     more-button 
                     m-4 
-                    p-[2px]
+                    p-[2px] 
                     inline-block
                     text-4xl 
                     text-black 
                     "
                 >
-                  <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M256 48C141.13 48 48 141.13 48 256s93.13 208 208 208 208-93.13 208-208S370.87 48 256 48zm62.63 304L296 374.63 177.37 256 296 137.37 318.63 160l-96 96z"></path></svg>
+                  <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M256 48C141.13 48 48 141.13 48 256s93.13 208 208 208 208-93.13 208-208S370.87 48 256 48zm62.63 304L296 374.63 177.37 256 296 137.37 318.63 160l-96 96z"></path>
+                  </svg>
 
-                </Link>
+                </button>
               </div>
 
             </div>
+
           </div>
 
         </div>

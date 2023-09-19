@@ -8,6 +8,7 @@ import { Mousewheel, Keyboard, Pagination, Navigation, HashNavigation, FreeMode,
 import { SwiperOptions } from 'swiper/types';
 import { useCallback, useEffect, useState } from 'react';
 import { useProducts } from '@/app/data/useProducts';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 import 'swiper/css';
@@ -19,6 +20,8 @@ import 'swiper/css/thumbs';
 import './swiper.css';
 
 export default function Products() {
+
+  const router = useRouter()
 
   const [mainContainer, setMainContainer] = useState<any>([]);
   const [galleryContainer, setGalleryContainer] = useState<any>([]);
@@ -197,22 +200,60 @@ export default function Products() {
 
                               </div>
 
-                              <div className="info w-10/12 lg:w-5/12">
-                                <h1 className="m-4 md:text-2xl lg:text-2xl">{item.name}</h1>
-                                <h2 className="m-4 md:text-2xl lg:text-2xl">{item.price}</h2>
 
-                                <Link
-                                  href={`/products/detail/${item.slug}`}
-                                  className="
-                                  more-button 
-                                  m-4 
-                                  inline-block
-                                  text-4xl 
-                                text-black 
-                                  "
-                                >
-                                  <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path></svg>
-                                </Link>
+
+                              <div className="info w-full lg:w-5/12 flex">
+
+                                <div className="w-10/12 flex flex-col">
+                                  <div className="flex">
+                                    <div className="w-full flex flex-col justify-between items-start sm:flex-row sm:items-center lg:items-start">
+                                      <h1 className="m-4 mt-6">{item?.name}</h1>
+
+                                      <h2 className="m-4 mt-6">{item?.price}</h2>
+                                    </div>
+                                  </div>
+
+                                  <h2 className="m-4 mb-0 text-sm font-bold">Descrição</h2>
+                                  <div className="m-4 mt-2" dangerouslySetInnerHTML={{ __html: item!.description.html }} />
+
+                                  <Link
+                                    href="#"
+                                    className="
+                                      more-button 
+                                      m-4 self-start 
+                                      rounded-md 
+                                      px-3 
+                                      py-2 
+                                      bg-indigo-600 
+                                      text-sm 
+                                      font-semibold 
+                                      text-white 
+                                      shadow-sm 
+                                      "
+                                  >
+                                    {item?.buttonLabel}
+                                  </Link>
+
+                                </div>
+
+                                <div className="w-2/12">
+                                  <button
+                                    onClick={() => router.push(`/products/detail/${item!.slug}`)}
+                                    className="
+                                      more-button 
+                                      m-4 
+                                      p-[2px] 
+                                      inline-block
+                                      text-4xl 
+                                      text-black 
+                                      "
+                                  >
+                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
+                                    </svg>
+
+                                  </button>
+                                </div>
 
                               </div>
 
