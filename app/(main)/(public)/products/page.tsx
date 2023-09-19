@@ -143,6 +143,8 @@ export default function Products() {
 
   }, [thumbsContainer, galleryContainer, mainContainer, data]);
 
+  let item;
+
   if (isLoading) return <Loading />;
 
   return (
@@ -156,11 +158,11 @@ export default function Products() {
                   <>
                     <div key={index}>
                       {page.map((edge, index) => {
-
+                        item = edge.node;
                         return (
                           <SwiperSlide className="flex flex-col justify-center items-center" key={index}>
 
-                            <div className="w-11/12 p-4 text-xs">{edge.node.department} / {edge.node.spirit} / {edge.node.productCategory}</div>
+                            <div className="w-11/12 p-4 text-xs">{item.department} / {item.spirit} / {item.productCategory}</div>
                             <div className="w-11/12 flex flex-col lg:flex-row-reverse">
 
                               <div className="w-full h-96 sm:h-[484px] gap-4 flex lg:w-7/12">
@@ -169,7 +171,7 @@ export default function Products() {
 
                                   <div className="w-full h-full">
                                     <Swiper className={`gallery gallery-${index} bg-white rounded-md`} {...galleryOptions(index)} onSwiper={galleryOnSwiper} onSlideChange={galleryOnSlideChange}>
-                                      {edge.node.images.map((e, i) => {
+                                      {item.images.map((e, i) => {
                                         return (
                                           <SwiperSlide className="bg-white p-6 rounded-md flex flex-row justify-center items-center" key={i}>
                                             <img className="block object-contain max-h-full" src={e.url} alt="" />
@@ -183,7 +185,7 @@ export default function Products() {
 
                                 <div className="w-2/12 h-3/6">
                                   <Swiper className={`thumbs thumbs-${index}`} {...thumbsOptions(index)} onSlideChange={thumbsOnSlideChange} onSwiper={thumbsOnSwiper}>
-                                    {edge.node.images.map((e, i) => {
+                                    {item.images.map((e, i) => {
                                       return (
                                         <SwiperSlide className="bg-white rounded-sm opacity-50 flex flex-col justify-center items-center" key={i}>
                                           <img className="w-full h-full block object-contain" src={e.url} alt="" />
@@ -196,27 +198,20 @@ export default function Products() {
                               </div>
 
                               <div className="info w-10/12 lg:w-5/12">
-                                <h1 className="m-4 md:text-2xl lg:text-2xl">{edge.node.name}</h1>
-                                <h2 className="m-4 md:text-2xl lg:text-2xl">{edge.node.price}</h2>
+                                <h1 className="m-4 md:text-2xl lg:text-2xl">{item.name}</h1>
+                                <h2 className="m-4 md:text-2xl lg:text-2xl">{item.price}</h2>
 
                                 <Link
-                                  href={`/products/detail/${edge.node.slug}`}
+                                  href={`/products/detail/${item.slug}`}
                                   className="
                                   more-button 
                                   m-4 
-                                  inline-block 
-                                  px-3 
-                                  py-2 
-                                  rounded-md 
-                                  bg-slate-400 
-                                  hover:bg-indigo-600 
-                                  font-semibold 
-                                  text-sm 
-                                  text-white 
-                                  shadow-sm
+                                  inline-block
+                                  text-4xl 
+                                text-black 
                                   "
                                 >
-                                  Detalhes
+                                  <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path></svg>
                                 </Link>
 
                               </div>
