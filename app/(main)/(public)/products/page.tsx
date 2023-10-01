@@ -146,8 +146,6 @@ export default function Products() {
 
   }, [thumbsContainer, galleryContainer, mainContainer, data]);
 
-  let item;
-
   if (isLoading) return <Loading />;
 
   return (
@@ -161,39 +159,38 @@ export default function Products() {
                   <>
                     <div key={index}>
                       {page.map((edge, index) => {
-                        item = edge.node;
                         return (
                           <SwiperSlide className="flex flex-col justify-center items-center" key={index}>
 
                             <div className="breadcrumb w-11/12 p-4 text-xs">
-                              {item.department}
+                              {edge.node.department}
                               <span className="inline-block px-1">/</span>
-                              {item.spirit}
+                              {edge.node.spirit}
                               <span className="inline-block px-1">/</span>
-                              {item.productCategory}
+                              {edge.node.productCategory}
                               <span className="inline-block px-1">/</span>
-                              {item.productCategory === 'Books'
+                              {edge.node.productCategory === 'Books'
                                 ?
                                 (
                                   <>
                                     {/* @ts-ignore */}
-                                    {item.productType.bookCategory}
+                                    {edge.node.productType.bookCategory}
                                     <span className="inline-block px-1">/</span>
                                     {/* @ts-ignore */}
-                                    {item.productType.author}
+                                    {edge.node.productType.author}
                                   </>
                                 )
                                 :
                                 (
                                   <>
                                     {/* @ts-ignore */}
-                                    {item.productType.shoeCategory}
+                                    {edge.node.productType.shoeCategory}
                                     <span className="inline-block px-1">/</span>
                                     {/* @ts-ignore */}
-                                    {item.productType.brand}
+                                    {edge.node.productType.brand}
                                     <span className="inline-block px-1">/</span>
                                     {/* @ts-ignore */}
-                                    {item.productType.gender}
+                                    {edge.node.productType.gender}
                                   </>
                                 )
                               }
@@ -206,7 +203,7 @@ export default function Products() {
 
                                   <div className="w-full h-full">
                                     <Swiper className={`gallery gallery-${index} bg-white rounded-md`} {...galleryOptions(index)} onSwiper={galleryOnSwiper} onSlideChange={galleryOnSlideChange}>
-                                      {item.images.map((e, i) => {
+                                      {edge.node.images.map((e, i) => {
                                         return (
                                           <SwiperSlide className="bg-white p-6 rounded-md flex flex-row justify-center items-center" key={i}>
                                             <img className="block object-contain max-h-full" src={e.url} alt="" />
@@ -220,7 +217,7 @@ export default function Products() {
 
                                 <div className="w-2/12 h-3/6">
                                   <Swiper className={`thumbs thumbs-${index}`} {...thumbsOptions(index)} onSlideChange={thumbsOnSlideChange} onSwiper={thumbsOnSwiper}>
-                                    {item.images.map((e, i) => {
+                                    {edge.node.images.map((e, i) => {
                                       return (
                                         <SwiperSlide className="bg-white rounded-sm opacity-50 flex flex-col justify-center items-center" key={i}>
                                           <img className="w-full h-full block object-contain" src={e.url} alt="" />
@@ -237,19 +234,19 @@ export default function Products() {
                                 <div className="w-10/12 flex flex-col">
                                   <div className="flex">
                                     <div className="w-full flex flex-col justify-between items-start sm:flex-row sm:items-center lg:items-start">
-                                      <h1 className="m-4 mt-6">{item?.name}</h1>
+                                      <h1 className="m-4 mt-6">{edge.node.name}</h1>
 
-                                      <h2 className="m-4 mt-6">{item?.price}</h2>
+                                      <h2 className="m-4 mt-6">{edge.node.price}</h2>
                                     </div>
                                   </div>
 
-                                  <div className="m-4 mt-2 text-sm" dangerouslySetInnerHTML={{ __html: item!.description.html }} />
+                                  <div className="m-4 mt-2 text-sm" dangerouslySetInnerHTML={{ __html: edge.node.description.html }} />
 
                                 </div>
 
                                 <div className="w-2/12">
                                   <button
-                                    onClick={() => router.push(`/products/detail/${item!.slug}`)}
+                                    onClick={() => router.push(`/products/detail/${edge.node.slug}`)}
                                     className="
                                       more-button 
                                       m-4 
