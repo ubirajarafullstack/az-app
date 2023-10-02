@@ -108,7 +108,7 @@ export default function Detail({ params }: { params: { slug: string } }) {
 
   //console.log(data)
 
-  if (!data) return <div className="w-screen h-screen flex flex-col justify-center items-center">Nada encontrado. <Link className="m-4 font-semibold text-sm" href="/products">Back</Link></div>
+  if (!data) return <div className="w-screen h-screen flex flex-col justify-center items-center">Nada encontrado. <Link className="m-4 font-semibold" href="/products">Back</Link></div>
 
   let product = []
   product.push(data);
@@ -200,12 +200,12 @@ export default function Detail({ params }: { params: { slug: string } }) {
 
                 {item.productCategory === 'Books' ? (
                   <>
-                    <h2 className="m-4 mb-0 text-sm font-bold">Motivos para ler</h2>
+                    <h2 className="m-4 mb-0 font-bold">Motivos para ler</h2>
                     {/* @ts-ignore */}
-                    <div className="m-4 mt-2 text-sm" dangerouslySetInnerHTML={{ __html: item.productType.why.html }} />
+                    <div className="m-4 mt-2" dangerouslySetInnerHTML={{ __html: item.productType.why.html }} />
 
-                    <h2 className="m-4 mb-0 text-sm font-bold">Sobre</h2>
-                    <div className="m-4 mt-2 text-sm grid gap-2 grid-cols-2 grid-rows-2">
+                    <h2 className="m-4 mb-0 font-bold">Sobre</h2>
+                    <div className="m-4 mt-2 grid gap-2 grid-cols-2 grid-rows-2">
                       {/* @ts-ignore */}
                       <p>Autor : {item.productType.author}</p>
                       {/* @ts-ignore */}
@@ -218,8 +218,8 @@ export default function Detail({ params }: { params: { slug: string } }) {
                   </>
                 ) : (
                   <>
-                    <h2 className="m-4 mb-0 text-sm font-bold">Sobre</h2>
-                    <div className="m-4 mt-2 text-sm grid gap-2 grid-cols-2 grid-rows-2">
+                    <h2 className="m-4 mb-0 font-bold">Sobre</h2>
+                    <div className="m-4 mt-2 grid gap-2 grid-cols-2 grid-rows-2">
                       {/* @ts-ignore */}
                       <p>Marca : {item.productType.brand}</p>
 
@@ -247,8 +247,8 @@ export default function Detail({ params }: { params: { slug: string } }) {
                   </>
                 )}
 
-                <h2 className="m-4 mb-0 text-sm font-bold">Descrição</h2>
-                <div className="m-4 mt-2 text-sm" dangerouslySetInnerHTML={{ __html: item!.description.html }} />
+                <h2 className="m-4 mb-0 font-bold">Descrição</h2>
+                <div className="m-4 mt-2" dangerouslySetInnerHTML={{ __html: item!.description.html }} />
 
                 <Link
                   href="#"
@@ -259,7 +259,7 @@ export default function Detail({ params }: { params: { slug: string } }) {
                     px-3 
                     py-2 
                     bg-blue-500 
-                    text-sm 
+                   
                     font-semibold 
                     text-white 
                     shadow-sm 
@@ -268,8 +268,8 @@ export default function Detail({ params }: { params: { slug: string } }) {
                   {item?.buttonLabel}
                 </Link>
 
-                <h2 className="m-4 mb-0 text-sm font-bold">Produto</h2>
-                <div className="highlights m-8 mt-0 text-sm" dangerouslySetInnerHTML={{ __html: item!.highlights.html }} />
+                <h2 className="m-4 mb-0 font-bold">Produto</h2>
+                <div className="highlights m-8 mt-0" dangerouslySetInnerHTML={{ __html: item!.highlights.html }} />
                 <button
                   onClick={() => router.back()}
                   className="

@@ -240,7 +240,7 @@ export default function Products() {
                                   </div>
                                 </div>
 
-                                <div className="m-4 mt-2 text-sm" dangerouslySetInnerHTML={{ __html: edge.node.description.html }} />
+                                <div className="m-4 mt-2" dangerouslySetInnerHTML={{ __html: edge.node.description.html }} />
 
                               </div>
 
