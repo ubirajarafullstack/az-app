@@ -26,21 +26,21 @@ export default function Detail({ params }: { params: { slug: string } }) {
 
   if (!params) router.back();
 
-  const [galleryContainer, setGalleryContainer] = useState<any>([]);
-  const [thumbsContainer, setThumbsContainer] = useState<any>([]);
+  const [detailGalleryContainer, setDetailGalleryContainer] = useState<any>([]);
+  const [detailThumbsContainer, setDetailThumbsContainer] = useState<any>([]);
 
   const getGallerySwiper = useCallback(
     (i: number) => {
-      return galleryContainer[i];
+      return detailGalleryContainer[i];
     },
-    [galleryContainer]
+    [detailGalleryContainer]
   );
 
   const getThumbsSwiper = useCallback(
     (i: number) => {
-      return thumbsContainer[i];
+      return detailThumbsContainer[i];
     },
-    [thumbsContainer]
+    [detailThumbsContainer]
   );
 
   const commonOptions: SwiperOptions = {
@@ -83,12 +83,12 @@ export default function Detail({ params }: { params: { slug: string } }) {
   });
 
   const gOnSwiper = (swiper: any) => {
-    setGalleryContainer((gallery: any) => [...gallery, swiper]);
+    setDetailGalleryContainer((gallery: any) => [...gallery, swiper]);
     //swiper.disable();
   };
 
   const tOnSwiper = (swiper: any) => {
-    setThumbsContainer((thumbs: any) => [...thumbs, swiper]);
+    setDetailThumbsContainer((thumbs: any) => [...thumbs, swiper]);
     //swiper.disable();
   };
 
@@ -96,12 +96,12 @@ export default function Detail({ params }: { params: { slug: string } }) {
 
   useEffect(() => {
 
-    if (galleryContainer[0]) {
-      const gallerySwiper = galleryContainer[0];
+    if (detailGalleryContainer[0]) {
+      const gallerySwiper = detailGalleryContainer[0];
       gallerySwiper.slideNext();
     }
 
-  }, [thumbsContainer, galleryContainer]);
+  }, [detailThumbsContainer, detailGalleryContainer]);
 
   if (isLoading) return <Loading />;
   if (error) console.log(error);
@@ -281,7 +281,7 @@ export default function Detail({ params }: { params: { slug: string } }) {
                     text-slate-400
                     "
                 >
-                  <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                  <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                     <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"></path>
                   </svg>
 
@@ -300,7 +300,7 @@ export default function Detail({ params }: { params: { slug: string } }) {
                     text-slate-400
                     "
                 >
-                  <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                  <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                     <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"></path>
                   </svg>
 

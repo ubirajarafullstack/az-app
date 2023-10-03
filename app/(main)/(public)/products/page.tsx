@@ -23,9 +23,13 @@ export default function Products() {
 
   const router = useRouter()
 
-  const [mainContainer, setMainContainer] = useState<any>([]);
+  /* const [mainContainer, setMainContainer] = useState<any>([]);
   const [galleryContainer, setGalleryContainer] = useState<any>([]);
-  const [thumbsContainer, setThumbsContainer] = useState<any>([]);
+  const [thumbsContainer, setThumbsContainer] = useState<any>([]); */
+
+  const [mainContainer, setMainContainer] = useSessionStorage('mainContainer', []);
+  const [galleryContainer, setGalleryContainer] = useSessionStorage('galleryContainer', []);
+  const [thumbsContainer, setThumbsContainer] = useSessionStorage('thumbsContainer', []);
 
   const getGallerySwiper = useCallback(
     (i: number) => {
@@ -318,4 +322,22 @@ export default function Products() {
     </>
   )
 
+}
+
+function useSessionStorage(key: any, initialValue: any) {
+  const [storedValue, setStoredValue] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const item = window.sessionStorage.getItem(key);
+      return item && item !== 'undefined' ? JSON.parse(item) : initialValue;
+    } else {
+      return initialValue;
+    }
+  });
+
+  const setValue = (value: any) => {
+    setStoredValue(value);
+    window.sessionStorage.setItem(key, JSON.stringify(value));
+  };
+
+  return [storedValue, setValue];
 }
