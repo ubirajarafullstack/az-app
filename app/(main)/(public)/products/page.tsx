@@ -160,7 +160,7 @@ export default function Products() {
                   <div key={index}>
                     {page.map((edge, index) => {
                       return (
-                        <SwiperSlide className="flex flex-col justify-center items-center" key={index}>
+                        <SwiperSlide key={edge.cursor} className="flex flex-col justify-center items-center">
 
                           <div className="breadcrumb w-11/12 p-4 text-xs">
                             {edge.node.department}
