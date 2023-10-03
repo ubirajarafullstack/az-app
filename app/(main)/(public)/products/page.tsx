@@ -10,6 +10,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { useProducts } from '@/app/data/useProducts';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -22,6 +24,8 @@ import './swiper.css';
 export default function Products() {
 
   const router = useRouter()
+
+  const pathname = usePathname()
 
   /* const [mainContainer, setMainContainer] = useState<any>([]);
   const [galleryContainer, setGalleryContainer] = useState<any>([]);
@@ -87,7 +91,7 @@ export default function Products() {
     pagination: false,
     mousewheel: false,
     keyboard: false,
-    freeMode: true,
+    freeMode: false,
     watchSlidesProgress: true,
   });
 
@@ -108,7 +112,9 @@ export default function Products() {
   const mainOnSlideChange = (swiper: any) => {
     if (galleryContainer[swiper.activeIndex]) {
       const gallerySwiper = galleryContainer[swiper.activeIndex];
+      const thumbsSwiper = galleryContainer[swiper.activeIndex];
       gallerySwiper.slideNext();
+      //thumbsSwiper.enable()
     }
   };
 
@@ -150,7 +156,25 @@ export default function Products() {
 
   }, [thumbsContainer, galleryContainer, mainContainer, data]);
 
+  useEffect(() => {
+    if (pathname === '/products') {
+      for (const key in galleryContainer) {
+        const gallerySwiper = galleryContainer[key];
+        const thumbsSwiper = thumbsContainer[key];
+
+        if (!thumbsSwiper.el.classList.contains('swiper-thumbs')) {
+
+          gallerySwiper.thumbs.swiper = thumbsSwiper;
+          thumbsSwiper.thumbs.swiper = gallerySwiper;
+          thumbsSwiper.el.classList.add('swiper-thumbs');
+        }
+      }
+    }
+  }, [pathname, galleryContainer, thumbsContainer]);
+
   if (isLoading) return <Loading />;
+
+  console.log(data);
 
   return (
     <>
@@ -206,7 +230,7 @@ export default function Products() {
                               <div className="w-10/12">
 
                                 <div className="w-full h-full">
-                                  <Swiper className={`gallery gallery-${index} bg-white rounded-md`} {...galleryOptions(index)} onSwiper={galleryOnSwiper} onSlideChange={galleryOnSlideChange}>
+                                  <Swiper className={`gallery gallery-${data?.pageParams.length! - 1} bg-white rounded-md`} {...galleryOptions(data?.pageParams.length! - 1)} onSwiper={galleryOnSwiper} onSlideChange={galleryOnSlideChange}>
                                     {edge.node.images.map((e, i) => {
                                       return (
                                         <SwiperSlide className="bg-white p-6 rounded-md flex flex-row justify-center items-center" key={i}>
@@ -220,7 +244,7 @@ export default function Products() {
                               </div>
 
                               <div className="w-2/12 h-3/6">
-                                <Swiper className={`thumbs thumbs-${index}`} {...thumbsOptions(index)} onSlideChange={thumbsOnSlideChange} onSwiper={thumbsOnSwiper}>
+                                <Swiper className={`thumbs thumbs-${data?.pageParams.length! - 1}`} {...thumbsOptions(data?.pageParams.length! - 1)} onSlideChange={thumbsOnSlideChange} onSwiper={thumbsOnSwiper}>
                                   {edge.node.images.map((e, i) => {
                                     return (
                                       <SwiperSlide className="bg-white rounded-sm opacity-50 flex flex-col justify-center items-center" key={i}>
@@ -300,8 +324,8 @@ export default function Products() {
             onClick={() => {
               fetchNextPage();
               //setMainContainer([])
-              setGalleryContainer([])
-              setThumbsContainer([])
+              //setGalleryContainer([])
+              //setThumbsContainer([])
             }}
             disabled={!hasNextPage || isFetchingNextPage}
           >
