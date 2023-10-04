@@ -153,11 +153,14 @@ export default function Products() {
       gallerySwiper.slideNext();
     }
 
-    /* if (thumbsSwiper && !thumbsSwiper.el.classList.contains('swiper-thumbs')) {
-      gallerySwiper.thumbs.swiper = thumbsSwiper;
-      thumbsSwiper.thumbs.swiper = gallerySwiper;
+    if (thumbsSwiper && !thumbsSwiper.el.classList.contains('swiper-thumbs')) {
+      if (thumbsSwiper.thumbs.swiper !== gallerySwiper) {
+        gallerySwiper.thumbs.swiper = thumbsSwiper;
+        //thumbsSwiper.thumbs.swiper = gallerySwiper;
+      }
       thumbsSwiper.el.classList.add('swiper-thumbs');
-    } */
+    }
+    
 
   };
 
@@ -209,6 +212,8 @@ export default function Products() {
       }
     }
   }, [pathname, galleryContainer, thumbsContainer]); */
+
+  
 
   useEffect(() => {
     if (mainContainer && sliderNext) {
