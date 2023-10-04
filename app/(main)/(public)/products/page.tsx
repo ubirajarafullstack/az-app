@@ -160,7 +160,7 @@ export default function Products() {
       }
       thumbsSwiper.el.classList.add('swiper-thumbs');
     }
-    
+
 
   };
 
@@ -213,7 +213,7 @@ export default function Products() {
     }
   }, [pathname, galleryContainer, thumbsContainer]); */
 
-  
+
 
   useEffect(() => {
     if (mainContainer && sliderNext) {
@@ -319,9 +319,9 @@ export default function Products() {
                               <div className="w-10/12 flex flex-col">
                                 <div className="flex">
                                   <div className="w-full flex flex-col justify-between items-start sm:flex-row sm:items-center lg:items-start">
-                                    <h1 className="m-4 mt-6">{edge.node.name}</h1>
+                                    <h1 className="m-4 mt-6 text-xl">{edge.node.name}</h1>
 
-                                    <h2 className="m-4 mt-6">{edge.node.price}</h2>
+                                    <h2 className="m-4 mt-6 text-xl">{edge.node.price}</h2>
                                   </div>
                                 </div>
 
@@ -334,10 +334,10 @@ export default function Products() {
                                   onClick={() => router.push(`/products/detail/${edge.node.slug}`)}
                                   className="
                                       more-button 
-                                      m-4 
+                                      m-3 
                                       p-[2px] 
                                       inline-block
-                                      text-4xl 
+                                      text-5xl 
                                       text-slate-400
                                       "
                                 >
@@ -364,42 +364,42 @@ export default function Products() {
           </Swiper>
         )}
 
-        <div className="absolute z-20 bottom-0 left-1/2 -translate-x-1/2 w-11/12 py-4 flex flex-col">
-          <button
-            className="
-              loading-more-button 
-              self-start 
+
+        <button
+          className="
+              loading-more-button
+              absolute 
+              z-20 
+              bottom-7 
+              right-7 
               flex 
               items-center 
               justify-center 
-              text-slate-400 
-              hover:text-slate-400 
-              focus:text-slate-400 
-              disabled:text-slate-400
-              text-4xl
+              text-orange-600 
+              text-6xl
               "
-            onClick={() => {
-              fetchNextPage();
-              //setMainContainer([])
-              //setGalleryContainer([])
-              //setThumbsContainer([])
+          onClick={() => {
+            fetchNextPage();
+            //setMainContainer([])
+            //setGalleryContainer([])
+            //setThumbsContainer([])
 
-              setSliderNext(true);
+            setSliderNext(true);
 
-            }}
-            disabled={!hasNextPage || isFetchingNextPage}
-          >
-            {isFetchingNextPage
-              ? (
-                <>
-                  <SpinnerSmall />
-                </>
-              )
-              : (data?.pages.length ?? 0) < totalProducts
-                ? <span dangerouslySetInnerHTML={{ __html: '<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"></path></svg>' }}></span>
-                : <span dangerouslySetInnerHTML={{ __html: '<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8zm5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707l-4.096 4.096z"></path></svg>' }}></span>}
-          </button>
-        </div>
+          }}
+          disabled={!hasNextPage || isFetchingNextPage}
+        >
+          {isFetchingNextPage
+            ? (
+              <>
+                <SpinnerSmall />
+              </>
+            )
+            : (data?.pages.length ?? 0) < totalProducts
+              ? <span dangerouslySetInnerHTML={{ __html: '<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"></path></svg>' }}></span>
+              : <span dangerouslySetInnerHTML={{ __html: '<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 8a8 8 0 1 0 16 0A8 8 0 0 0 0 8zm5.904 2.803a.5.5 0 1 1-.707-.707L9.293 6H6.525a.5.5 0 1 1 0-1H10.5a.5.5 0 0 1 .5.5v3.975a.5.5 0 0 1-1 0V6.707l-4.096 4.096z"></path></svg>' }}></span>}
+        </button>
+
 
       </div>
 

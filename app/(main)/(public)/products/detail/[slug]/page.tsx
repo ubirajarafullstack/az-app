@@ -44,26 +44,28 @@ export default function Detail({ params }: { params: { slug: string } }) {
   );
 
   const commonOptions: SwiperOptions = {
-    modules: [Mousewheel, Keyboard, Pagination, Navigation, HashNavigation, FreeMode, Thumbs, Controller, Virtual],
+    modules: [Mousewheel, Keyboard, Pagination, Navigation, HashNavigation, FreeMode, Thumbs],
     direction: 'horizontal',
     slidesPerView: 1,
     spaceBetween: 50,
     navigation: false,
     pagination: { clickable: true },
-    mousewheel: true,
-    keyboard: { enabled: true },
-    freeMode: false,
-    loop: true,
-    hashNavigation: false,
-    watchSlidesProgress: false,
-    nested: false,
-    thumbs: undefined,
+    //mousewheel: true,
+    //keyboard: { enabled: true },
+    //freeMode: false,
+    //loop: true,
+    //hashNavigation: false,
+    //watchSlidesProgress: false,
+    //nested: false,
+    //thumbs: undefined,
   }
 
   const galleryOptions: (i: number) => SwiperOptions = (i: number) => ({
     ...commonOptions,
     pagination: false,
-    watchSlidesProgress: true,
+    //watchSlidesProgress: true,
+    keyboard: { enabled: true },
+    mousewheel: false,
     nested: true,
     thumbs: {
       swiper: getThumbsSwiper(i)
@@ -76,10 +78,10 @@ export default function Detail({ params }: { params: { slug: string } }) {
     spaceBetween: 10,
     slidesPerView: 3,
     pagination: false,
-    mousewheel: false,
-    keyboard: false,
-    freeMode: true,
-    watchSlidesProgress: true,
+    //mousewheel: false,
+    //keyboard: false,
+    //freeMode: false,
+    //watchSlidesProgress: true,
   });
 
   const gOnSwiper = (swiper: any) => {
@@ -192,60 +194,11 @@ export default function Detail({ params }: { params: { slug: string } }) {
               <div className="w-10/12 flex flex-col">
                 <div className="flex">
                   <div className="w-full flex flex-col justify-between items-start sm:flex-row sm:items-center lg:items-start">
-                    <h1 className="m-4 mt-6">{item?.name}</h1>
+                    <h1 className="m-4 mt-6 text-xl">{item?.name}</h1>
 
-                    <h2 className="m-4 mt-6">{item?.price}</h2>
+                    <h2 className="m-4 mt-6 text-xl">{item?.price}</h2>
                   </div>
                 </div>
-
-                {item.productCategory === 'Books' ? (
-                  <>
-                    <h2 className="m-4 mb-0 font-bold">Motivos para ler</h2>
-                    {/* @ts-ignore */}
-                    <div className="m-4 mt-2" dangerouslySetInnerHTML={{ __html: item.productType.why.html }} />
-
-                    <h2 className="m-4 mb-0 font-bold">Sobre</h2>
-                    <div className="m-4 mt-2 grid gap-2 grid-cols-2 grid-rows-2">
-                      {/* @ts-ignore */}
-                      <p>Autor : {item.productType.author}</p>
-                      {/* @ts-ignore */}
-                      <p>Tradutor : {item.productType.translator}</p>
-                      {/* @ts-ignore */}
-                      <p>Categoria : {item.productType.bookCategory}</p>
-                      {/* @ts-ignore */}
-                      <p>Dimensões : {item.productType.dimension}</p>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <h2 className="m-4 mb-0 font-bold">Sobre</h2>
-                    <div className="m-4 mt-2 grid gap-2 grid-cols-2 grid-rows-2">
-                      {/* @ts-ignore */}
-                      <p>Marca : {item.productType.brand}</p>
-
-                      {/* @ts-ignore */}
-                      <p>Gênero : {item.productType.gender}</p>
-
-                      <p>Cores :
-                        {/* @ts-ignore */}
-                        {item.productType.colors.map((color, index) => (
-                          <span className="inline-block w-4 h-4 rounded-full mx-1" key={index} style={{ background: color.hex }}></span>
-                        ))}
-                      </p>
-
-                      <p>Tamanhos :
-                        {/* @ts-ignore */}
-                        {item.productType.sizes.map((size, index) => (
-                          <span className="px-1" key={index}>{size}</span>
-                        ))}
-                      </p>
-
-                      {/* @ts-ignore */}
-                      <p>Categoria : {item.productType.shoeCategory}</p>
-
-                    </div>
-                  </>
-                )}
 
                 <h2 className="m-4 mb-0 font-bold">Descrição</h2>
                 <div className="m-4 mt-2" dangerouslySetInnerHTML={{ __html: item!.description.html }} />
@@ -256,10 +209,9 @@ export default function Detail({ params }: { params: { slug: string } }) {
                     more-button 
                     m-4 self-start 
                     rounded-full 
-                    px-3 
-                    py-2 
-                    bg-blue-500 
-                   
+                    px-5 
+                    py-3 
+                    bg-orange-600 
                     font-semibold 
                     text-white 
                     shadow-sm 
@@ -270,14 +222,66 @@ export default function Detail({ params }: { params: { slug: string } }) {
 
                 <h2 className="m-4 mb-0 font-bold">Produto</h2>
                 <div className="highlights m-8 mt-0" dangerouslySetInnerHTML={{ __html: item!.highlights.html }} />
+
+                {item.productCategory === 'Books' ? (
+                  <>
+                    <h2 className="m-4 mb-0 font-bold">Motivos para ler</h2>
+                    {/* @ts-ignore */}
+                    <div className="paragraphs m-4 mt-2" dangerouslySetInnerHTML={{ __html: item.productType.why.html }} />
+
+                    <h2 className="m-4 mb-0 font-bold">Sobre</h2>
+                    <div className="m-4 mt-2 grid gap-2 grid-cols-2 grid-rows-2">
+                      {/* @ts-ignore */}
+                      <p>Autor: {item.productType.author}</p>
+                      {/* @ts-ignore */}
+                      <p>Tradutor: {item.productType.translator}</p>
+                      {/* @ts-ignore */}
+                      <p>Categoria: {item.productType.bookCategory}</p>
+                      {/* @ts-ignore */}
+                      <p>Dimensões: {item.productType.dimension}</p>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <h2 className="m-4 mb-0 font-bold">Sobre</h2>
+                    <div className="m-4 mt-2 grid gap-2 grid-cols-2 grid-rows-2">
+                      {/* @ts-ignore */}
+                      <p>Marca: {item.productType.brand}</p>
+
+                      {/* @ts-ignore */}
+                      <p>Gênero: {item.productType.gender}</p>
+
+                      <p>Cores:
+                        {/* @ts-ignore */}
+                        {item.productType.colors.map((color, index) => (
+                          <span className="inline-block w-4 h-4 rounded-full mx-1" key={index} style={{ background: color.hex }}></span>
+                        ))}
+                      </p>
+
+                      <p>Tamanhos:
+                        {/* @ts-ignore */}
+                        {item.productType.sizes.map((size, index) => (
+                          <span className="px-1" key={index}>{size}</span>
+                        ))}
+                      </p>
+
+                      {/* @ts-ignore */}
+                      <p>Categoria: {item.productType.shoeCategory}</p>
+
+                    </div>
+                  </>
+                )}
+
+                
                 <button
-                  onClick={() => router.back()}
+                  //onClick={() => router.back()}
+                  onClick={() => router.push(`/products#${item.slug}`)}
                   className="
                     more-button 
                     m-4 
                     p-[2px] 
                     inline-block
-                    text-4xl 
+                    text-5xl 
                     text-slate-400
                     "
                 >
@@ -294,10 +298,10 @@ export default function Detail({ params }: { params: { slug: string } }) {
                   onClick={() => router.push(`/products#${item.slug}`)}
                   className="
                     more-button 
-                    m-4 
+                    m-3 
                     p-[2px] 
                     inline-block
-                    text-4xl 
+                    text-5xl 
                     text-slate-400
                     "
                 >
