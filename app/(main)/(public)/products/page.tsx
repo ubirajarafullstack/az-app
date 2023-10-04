@@ -4,7 +4,7 @@
 import Loading from '@/app/components/Loading';
 import SpinnerSmall from '@/app/components/SpinnerSmall';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Mousewheel, Keyboard, Pagination, Navigation, HashNavigation, FreeMode, Thumbs} from 'swiper/modules';
+import { Mousewheel, Keyboard, Pagination, Navigation, HashNavigation, FreeMode, Thumbs } from 'swiper/modules';
 import { SwiperOptions } from 'swiper/types';
 import { useCallback, useEffect, useState } from 'react';
 import { useProducts } from '@/app/data/useProducts';
@@ -125,20 +125,21 @@ export default function Products() {
   const mainOnSlideChange = (swiper: any) => {
     const activeIndex = swiper.activeIndex;
     const thumbsSwiper = thumbsContainer[activeIndex];
-  
-    if (thumbsSwiper && !thumbsSwiper.el.classList.contains('swiper-thumbs')) {
-      thumbsSwiper.el.classList.add('swiper-thumbs');
+    const gallerySwiper = galleryContainer[activeIndex];
+
+    console.log('from main on slide change', gallerySwiper)
+
+    if (gallerySwiper) {
+      gallerySwiper.slideNext();
     }
 
-    if (galleryContainer[activeIndex]) {
-      const gallerySwiper = galleryContainer[activeIndex];
-      const thumbsSwiper = galleryContainer[activeIndex];
-      gallerySwiper.slideNext();
-      //thumbsSwiper.enable()
-    }
+    /* if (thumbsSwiper && !thumbsSwiper.el.classList.contains('swiper-thumbs')) {
+      gallerySwiper.thumbs.swiper = thumbsSwiper;
+      thumbsSwiper.thumbs.swiper = gallerySwiper;
+      thumbsSwiper.el.classList.add('swiper-thumbs');
+    } */
 
   };
-  
 
   const galleryOnSlideChange = (swiper: any) => {
   };
@@ -166,11 +167,6 @@ export default function Products() {
       //thumbsSwiper.enable();
     }
 
-    if (galleryContainer[0]) {
-      const gallerySwiper = galleryContainer[0];
-      gallerySwiper.slideNext();
-    }
-
     if (mainContainer[0]) {
       const mainSwiper = mainContainer[0];
       mainSwiper.slideTo(data?.pageParams.length ? data.pageParams.length : 0);
@@ -178,7 +174,7 @@ export default function Products() {
 
   }, [thumbsContainer, galleryContainer, mainContainer, data]);
 
-  /* useEffect(() => {
+  useEffect(() => {
     if (pathname === '/products') {
       for (const key in galleryContainer) {
         const gallerySwiper = galleryContainer[key];
@@ -192,7 +188,7 @@ export default function Products() {
         }
       }
     }
-  }, [pathname, galleryContainer, thumbsContainer]); */
+  }, [pathname, galleryContainer, thumbsContainer]);
 
   if (isLoading) return <Loading />;
 
@@ -252,7 +248,7 @@ export default function Products() {
                               <div className="w-10/12">
 
                                 <div className="w-full h-full">
-                                  <Swiper className={`gallery gallery-${data?.pageParams.length! - 1} bg-white rounded-md`} {...galleryOptions(data?.pageParams.length! - 1)} onSwiper={galleryOnSwiper} onSlideChange={void(0)}>
+                                  <Swiper className={`gallery gallery-${data?.pageParams.length! - 1} bg-white rounded-md`} {...galleryOptions(data?.pageParams.length! - 1)} onSwiper={galleryOnSwiper} onSlideChange={void (0)}>
                                     {edge.node.images.map((e, i) => {
                                       return (
                                         <SwiperSlide className="bg-white p-6 rounded-md flex flex-row justify-center items-center" key={i}>
@@ -266,7 +262,7 @@ export default function Products() {
                               </div>
 
                               <div className="w-2/12 h-3/6">
-                                <Swiper className={`thumbs thumbs-${data?.pageParams.length! - 1}`} {...thumbsOptions(data?.pageParams.length! - 1)} onSwiper={thumbsOnSwiper} onSlideChange={void(0)}>
+                                <Swiper className={`thumbs thumbs-${data?.pageParams.length! - 1}`} {...thumbsOptions(data?.pageParams.length! - 1)} onSwiper={thumbsOnSwiper} onSlideChange={void (0)}>
                                   {edge.node.images.map((e, i) => {
                                     return (
                                       <SwiperSlide className="bg-white rounded-sm opacity-50 flex flex-col justify-center items-center" key={i}>
