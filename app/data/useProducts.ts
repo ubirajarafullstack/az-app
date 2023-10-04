@@ -2,9 +2,10 @@ import { InfiniteData, useInfiniteQuery } from '@tanstack/react-query';
 import { graphqlClient } from './hygraph';
 import { productsByDesc } from '../graphql/products.graphql';
 import { useState} from 'react';
-type ProductType = Book | Shoe;
 
-interface Book {
+export type ProductType = Book | Shoe;
+
+export interface Book {
   id: string;
   publisher: string;
   author: string;
@@ -14,7 +15,7 @@ interface Book {
   why: Why;
 }
 
-interface Shoe {
+export interface Shoe {
   id: string;
   brand: string;
   sizes: number[];
@@ -23,24 +24,24 @@ interface Shoe {
   gender: string;
 }
 
-interface Color {
+export interface Color {
   hex: string;
 }
 
-interface Why {
+export interface Why {
   html: string;
 }
 
-interface Description {
+export interface Description {
   html: string;
 }
 
-interface Image {
+export interface Image {
   id: string;
   url: string;
 }
 
-interface ProductData {
+export interface ProductData {
   id: string;
   department: string;
   spirit: string;
@@ -58,7 +59,7 @@ interface ProductData {
   highlights: Description;
 }
 
-interface PageInfo {
+export interface PageInfo {
   hasNextPage: boolean;
   hasPreviousPage: boolean;
   startCursor: string;
@@ -66,7 +67,7 @@ interface PageInfo {
   pageSize: number;
 }
 
-interface ProductsConnection {
+export interface ProductsConnection {
   edges: {
     cursor: string;
     node: ProductData;
@@ -74,20 +75,20 @@ interface ProductsConnection {
   pageInfo: PageInfo;
 }
 
-interface Data {
+export interface Data {
   productsConnection: ProductsConnection;
 }
 
-type Products = {
+export type Products = {
   data: Data;
 };
 
-interface Edge {
+export interface Edge {
   cursor: string;
   node: ProductData;
 }
 
-interface PageInfo {
+export interface PageInfo {
   hasNextPage: boolean;
   hasPreviousPage: boolean;
   startCursor: string;
@@ -95,16 +96,16 @@ interface PageInfo {
   pageSize: number;
 }
 
-interface ProductsConnection {
+export interface ProductsConnection {
   edges: Edge[];
   pageInfo: PageInfo;
 }
 
-interface Page {
+export interface Page {
   productsConnection: ProductsConnection;
 }
 
-interface Data {
+export interface Data {
   pages: Page[];
   pageParams: number[];
 }
@@ -118,7 +119,9 @@ export function useProducts(limit: number) {
   const [totalProducts, setTotalProducts] = useState<number>(0);
   
   async function products(page: number) {
+
     console.log('page from hook', page)
+    
     let variables: Variables = {
       limit
     }

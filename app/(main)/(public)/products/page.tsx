@@ -7,7 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Mousewheel, Keyboard, Pagination, Navigation, HashNavigation, FreeMode, Thumbs } from 'swiper/modules';
 import { SwiperOptions } from 'swiper/types';
 import { useCallback, useEffect, useState } from 'react';
-import { useProducts } from '@/app/data/useProducts';
+import { useProducts, Page, Edge } from '@/app/data/useProducts';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -31,7 +31,10 @@ export default function Products() {
   const [galleryContainer, setGalleryContainer] = useState<any>([]);
   const [thumbsContainer, setThumbsContainer] = useState<any>([]); */
 
-  const [mainContainer, setMainContainer] = useSessionStorage('mainContainer', []);
+  const [mainData, setMainData] = useSessionStorage('mainData', []);
+  
+  const [mainContainer, setMainContainer] = useState<any>(null);
+  //const [mainContainer, setMainContainer] = useSessionStorage('mainContainer', []);
   const [galleryContainer, setGalleryContainer] = useSessionStorage('galleryContainer', []);
   const [thumbsContainer, setThumbsContainer] = useSessionStorage('thumbsContainer', []);
 
@@ -71,7 +74,7 @@ export default function Products() {
     direction: 'vertical',
     keyboard: { enabled: true },
     mousewheel: true,
-    //hashNavigation: { watchState: false },
+    hashNavigation: { watchState: true },
     //watchSlidesProgress: false,
   }
 
@@ -100,12 +103,27 @@ export default function Products() {
   });
 
   const mainOnSwiper = (swiper: any) => {
-    setMainContainer((main: any) => [...main, swiper]);
+    //setMainContainer((main: any) => [...main, swiper]);
+    setMainContainer(swiper);
+  
+    // Sincronize o slide ativo com a página de dados atual
+    //swiper.slideTo(data?.pageParams.length ? data.pageParams.length : 0);
+
+    /* if (mainContainer) {
+      const mainSwiper = mainContainer;
+      mainSwiper.update();
+      mainSwiper.slideTo(data?.pageParams.length ? data.pageParams.length : 0);
+    } */
   };
+  
 
   const galleryOnSwiper = (swiper: any) => {
     setGalleryContainer((gallery: any) => [...gallery, swiper]);
     //swiper.disable();
+    /* if(mainContainer) {
+      mainContainer.slideNext();
+      console.log('from g on' , mainContainer)
+    } */
   };
 
   const thumbsOnSwiper = (swiper: any) => {
@@ -127,7 +145,7 @@ export default function Products() {
     const thumbsSwiper = thumbsContainer[activeIndex];
     const gallerySwiper = galleryContainer[activeIndex];
 
-    console.log('from main on slide change', gallerySwiper)
+    //console.log('from main on slide change', gallerySwiper)
 
     if (gallerySwiper) {
       gallerySwiper.slideNext();
@@ -159,7 +177,7 @@ export default function Products() {
     isFetchingPreviousPage
   } = useProducts(99);
 
-  useEffect(() => {
+  /* useEffect(() => {
     for (const key in galleryContainer) {
       const gallerySwiper = galleryContainer[key];
       const thumbsSwiper = thumbsContainer[key];
@@ -172,9 +190,9 @@ export default function Products() {
       mainSwiper.slideTo(data?.pageParams.length ? data.pageParams.length : 0);
     }
 
-  }, [thumbsContainer, galleryContainer, mainContainer, data]);
+  }, [thumbsContainer, galleryContainer, mainContainer, data]); */
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (pathname === '/products') {
       for (const key in galleryContainer) {
         const gallerySwiper = galleryContainer[key];
@@ -182,31 +200,42 @@ export default function Products() {
 
         if (!thumbsSwiper.el.classList.contains('swiper-thumbs')) {
 
-          gallerySwiper.thumbs.swiper = thumbsSwiper;
-          thumbsSwiper.thumbs.swiper = gallerySwiper;
-          thumbsSwiper.el.classList.add('swiper-thumbs');
+          //gallerySwiper.thumbs.swiper = thumbsSwiper;
+          //thumbsSwiper.thumbs.swiper = gallerySwiper;
+          //thumbsSwiper.el.classList.add('swiper-thumbs');
         }
       }
     }
-  }, [pathname, galleryContainer, thumbsContainer]);
+  }, [pathname, galleryContainer, thumbsContainer]); */
+
+
+  useEffect(() => {
+    if (mainContainer) {
+      mainContainer.slideNext();
+    }
+  }, [galleryContainer, mainContainer]);
+  
+  useEffect(() => {
+    setMainData(data);
+  }, [data, setMainData]);
 
   if (isLoading) return <Loading />;
 
-  //console.log(data);
+  console.log(mainData);
 
   return (
     <>
       <div className="relative h-screen flex justify-center items-center">
-        {data && (
+        {mainData && (
           <Swiper {...mainOptions} className="main" onSwiper={mainOnSwiper} onSlideChange={mainOnSlideChange}>
             <>
               {
-                data?.pages.map((page, index) => (
+                mainData?.pages.map((page: Edge[], index: number) => (
 
                   <div key={index}>
-                    {page.map((edge, index) => {
+                    {page.map((edge: Edge, index: number) => {
                       return (
-                        <SwiperSlide key={edge.cursor} className="flex flex-col justify-center items-center">
+                        <SwiperSlide key={edge.cursor} className="flex flex-col justify-center items-center" data-hash={edge.node.slug}>
 
                           <div className="breadcrumb w-11/12 p-4 text-xs">
                             {edge.node.department}
@@ -248,7 +277,7 @@ export default function Products() {
                               <div className="w-10/12">
 
                                 <div className="w-full h-full">
-                                  <Swiper className={`gallery gallery-${data?.pageParams.length! - 1} bg-white rounded-md`} {...galleryOptions(data?.pageParams.length! - 1)} onSwiper={galleryOnSwiper} onSlideChange={void (0)}>
+                                  <Swiper className={`gallery gallery-${data?.pageParams.length! - 1} bg-white rounded-md`} {...galleryOptions(data?.pageParams.length! - 1)} onSwiper={galleryOnSwiper} onSlideChange={galleryOnSlideChange}>
                                     {edge.node.images.map((e, i) => {
                                       return (
                                         <SwiperSlide className="bg-white p-6 rounded-md flex flex-row justify-center items-center" key={i}>
@@ -262,7 +291,7 @@ export default function Products() {
                               </div>
 
                               <div className="w-2/12 h-3/6">
-                                <Swiper className={`thumbs thumbs-${data?.pageParams.length! - 1}`} {...thumbsOptions(data?.pageParams.length! - 1)} onSwiper={thumbsOnSwiper} onSlideChange={void (0)}>
+                                <Swiper className={`thumbs thumbs-${data?.pageParams.length! - 1}`} {...thumbsOptions(data?.pageParams.length! - 1)} onSwiper={thumbsOnSwiper} onSlideChange={thumbsOnSlideChange}>
                                   {edge.node.images.map((e, i) => {
                                     return (
                                       <SwiperSlide className="bg-white rounded-sm opacity-50 flex flex-col justify-center items-center" key={i}>
@@ -344,6 +373,7 @@ export default function Products() {
               //setMainContainer([])
               //setGalleryContainer([])
               //setThumbsContainer([])
+              
             }}
             disabled={!hasNextPage || isFetchingNextPage}
           >

@@ -290,7 +290,8 @@ export default function Detail({ params }: { params: { slug: string } }) {
 
               <div className="w-2/12">
                 <button
-                  onClick={() => router.back()}
+                  //onClick={() => router.back()}
+                  onClick={() => router.push(`/products#${item.slug}`)}
                   className="
                     more-button 
                     m-4 
