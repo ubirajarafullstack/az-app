@@ -32,11 +32,13 @@ export default function Products() {
   const [thumbsContainer, setThumbsContainer] = useState<any>([]); */
 
   const [mainData, setMainData] = useSessionStorage('mainData', []);
-  
+
   const [mainContainer, setMainContainer] = useState<any>(null);
   //const [mainContainer, setMainContainer] = useSessionStorage('mainContainer', []);
   const [galleryContainer, setGalleryContainer] = useSessionStorage('galleryContainer', []);
   const [thumbsContainer, setThumbsContainer] = useSessionStorage('thumbsContainer', []);
+
+  const [sliderNext, setSliderNext] = useState<boolean>(false);
 
   const getGallerySwiper = useCallback(
     (i: number) => {
@@ -105,7 +107,7 @@ export default function Products() {
   const mainOnSwiper = (swiper: any) => {
     //setMainContainer((main: any) => [...main, swiper]);
     setMainContainer(swiper);
-  
+
     // Sincronize o slide ativo com a página de dados atual
     //swiper.slideTo(data?.pageParams.length ? data.pageParams.length : 0);
 
@@ -115,7 +117,7 @@ export default function Products() {
       mainSwiper.slideTo(data?.pageParams.length ? data.pageParams.length : 0);
     } */
   };
-  
+
 
   const galleryOnSwiper = (swiper: any) => {
     setGalleryContainer((gallery: any) => [...gallery, swiper]);
@@ -208,13 +210,16 @@ export default function Products() {
     }
   }, [pathname, galleryContainer, thumbsContainer]); */
 
-
   useEffect(() => {
-    if (mainContainer) {
+    if (mainContainer && sliderNext) {
+
       mainContainer.slideNext();
+      mainContainer.slideTo(totalProducts);
+
+      setTimeout(() => setSliderNext(false), 1000);
     }
-  }, [galleryContainer, mainContainer]);
-  
+  }, [sliderNext, mainContainer, galleryContainer, totalProducts]);
+
   useEffect(() => {
     setMainData(data);
   }, [data, setMainData]);
@@ -373,7 +378,9 @@ export default function Products() {
               //setMainContainer([])
               //setGalleryContainer([])
               //setThumbsContainer([])
-              
+
+              setSliderNext(true);
+
             }}
             disabled={!hasNextPage || isFetchingNextPage}
           >
