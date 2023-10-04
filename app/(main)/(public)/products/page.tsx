@@ -4,7 +4,7 @@
 import Loading from '@/app/components/Loading';
 import SpinnerSmall from '@/app/components/SpinnerSmall';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Mousewheel, Keyboard, Pagination, Navigation, HashNavigation, FreeMode, Thumbs, Controller, Virtual } from 'swiper/modules';
+import { Mousewheel, Keyboard, Pagination, Navigation, HashNavigation, FreeMode, Thumbs} from 'swiper/modules';
 import { SwiperOptions } from 'swiper/types';
 import { useCallback, useEffect, useState } from 'react';
 import { useProducts } from '@/app/data/useProducts';
@@ -50,25 +50,27 @@ export default function Products() {
   );
 
   const commonOptions: SwiperOptions = {
-    modules: [Mousewheel, Keyboard, Pagination, Navigation, HashNavigation, FreeMode, Thumbs, Controller, Virtual],
+    modules: [Mousewheel, Keyboard, Pagination, Navigation, HashNavigation, FreeMode, Thumbs],
     direction: 'horizontal',
     slidesPerView: 1,
     spaceBetween: 50,
     navigation: false,
     pagination: { clickable: true },
-    mousewheel: true,
-    keyboard: { enabled: true },
-    freeMode: false,
-    loop: true,
-    hashNavigation: false,
-    watchSlidesProgress: false,
-    nested: false,
-    thumbs: undefined,
+    //mousewheel: true,
+    //keyboard: { enabled: true },
+    //freeMode: false,
+    //loop: true,
+    //hashNavigation: false,
+    //watchSlidesProgress: false,
+    //nested: false,
+    //thumbs: undefined,
   }
 
   const mainOptions: SwiperOptions = {
     ...commonOptions,
     direction: 'vertical',
+    keyboard: { enabled: true },
+    mousewheel: true,
     //hashNavigation: { watchState: false },
     //watchSlidesProgress: false,
   }
@@ -76,7 +78,9 @@ export default function Products() {
   const galleryOptions: (i: number) => SwiperOptions = (i: number) => ({
     ...commonOptions,
     pagination: false,
-    watchSlidesProgress: true,
+    //watchSlidesProgress: true,
+    keyboard: { enabled: true },
+    mousewheel: true,
     nested: true,
     thumbs: {
       swiper: getThumbsSwiper(i)
@@ -89,10 +93,10 @@ export default function Products() {
     spaceBetween: 10,
     slidesPerView: 3,
     pagination: false,
-    mousewheel: false,
-    keyboard: false,
-    freeMode: false,
-    watchSlidesProgress: true,
+    //mousewheel: false,
+    //keyboard: false,
+    //freeMode: false,
+    //watchSlidesProgress: true,
   });
 
   const mainOnSwiper = (swiper: any) => {
@@ -109,14 +113,32 @@ export default function Products() {
     //swiper.disable();
   };
 
-  const mainOnSlideChange = (swiper: any) => {
+  /* const mainOnSlideChange = (swiper: any) => {
     if (galleryContainer[swiper.activeIndex]) {
       const gallerySwiper = galleryContainer[swiper.activeIndex];
       const thumbsSwiper = galleryContainer[swiper.activeIndex];
       gallerySwiper.slideNext();
       //thumbsSwiper.enable()
     }
+  }; */
+
+  const mainOnSlideChange = (swiper: any) => {
+    const activeIndex = swiper.activeIndex;
+    const thumbsSwiper = thumbsContainer[activeIndex];
+  
+    if (thumbsSwiper && !thumbsSwiper.el.classList.contains('swiper-thumbs')) {
+      thumbsSwiper.el.classList.add('swiper-thumbs');
+    }
+
+    if (galleryContainer[activeIndex]) {
+      const gallerySwiper = galleryContainer[activeIndex];
+      const thumbsSwiper = galleryContainer[activeIndex];
+      gallerySwiper.slideNext();
+      //thumbsSwiper.enable()
+    }
+
   };
+  
 
   const galleryOnSlideChange = (swiper: any) => {
   };
@@ -156,7 +178,7 @@ export default function Products() {
 
   }, [thumbsContainer, galleryContainer, mainContainer, data]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (pathname === '/products') {
       for (const key in galleryContainer) {
         const gallerySwiper = galleryContainer[key];
@@ -170,17 +192,17 @@ export default function Products() {
         }
       }
     }
-  }, [pathname, galleryContainer, thumbsContainer]);
+  }, [pathname, galleryContainer, thumbsContainer]); */
 
   if (isLoading) return <Loading />;
 
-  console.log(data);
+  //console.log(data);
 
   return (
     <>
       <div className="relative h-screen flex justify-center items-center">
         {data && (
-          <Swiper {...mainOptions} className="main" onSlideChange={mainOnSlideChange} onSwiper={mainOnSwiper}>
+          <Swiper {...mainOptions} className="main" onSwiper={mainOnSwiper} onSlideChange={mainOnSlideChange}>
             <>
               {
                 data?.pages.map((page, index) => (
@@ -230,7 +252,7 @@ export default function Products() {
                               <div className="w-10/12">
 
                                 <div className="w-full h-full">
-                                  <Swiper className={`gallery gallery-${data?.pageParams.length! - 1} bg-white rounded-md`} {...galleryOptions(data?.pageParams.length! - 1)} onSwiper={galleryOnSwiper} onSlideChange={galleryOnSlideChange}>
+                                  <Swiper className={`gallery gallery-${data?.pageParams.length! - 1} bg-white rounded-md`} {...galleryOptions(data?.pageParams.length! - 1)} onSwiper={galleryOnSwiper} onSlideChange={void(0)}>
                                     {edge.node.images.map((e, i) => {
                                       return (
                                         <SwiperSlide className="bg-white p-6 rounded-md flex flex-row justify-center items-center" key={i}>
@@ -244,7 +266,7 @@ export default function Products() {
                               </div>
 
                               <div className="w-2/12 h-3/6">
-                                <Swiper className={`thumbs thumbs-${data?.pageParams.length! - 1}`} {...thumbsOptions(data?.pageParams.length! - 1)} onSlideChange={thumbsOnSlideChange} onSwiper={thumbsOnSwiper}>
+                                <Swiper className={`thumbs thumbs-${data?.pageParams.length! - 1}`} {...thumbsOptions(data?.pageParams.length! - 1)} onSwiper={thumbsOnSwiper} onSlideChange={void(0)}>
                                   {edge.node.images.map((e, i) => {
                                     return (
                                       <SwiperSlide className="bg-white rounded-sm opacity-50 flex flex-col justify-center items-center" key={i}>
