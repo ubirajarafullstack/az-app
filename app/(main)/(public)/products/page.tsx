@@ -291,7 +291,7 @@ export default function Products() {
 
                             <div className="w-11/12 flex flex-col lg:flex-row-reverse">
 
-                              <div className="w-full h-96 sm:h-[484px] gap-4 flex lg:w-7/12">
+                              <div className="w-full h-80 sm:h-[484px] gap-4 flex lg:w-7/12">
 
                                 <div className="w-10/12">
 
@@ -330,7 +330,7 @@ export default function Products() {
                                     <div className="w-full flex flex-col justify-between items-start sm:flex-row sm:items-center lg:items-start">
                                       <h1 className="m-4 mt-6 text-xl">{edge.node.name}</h1>
 
-                                      <h2 className="m-4 mt-6 text-xl">{edge.node.price}</h2>
+                                      <h2 className="mx-4 sm:m-4 sm:mt-6 text-xl">{edge.node.price}</h2>
                                     </div>
                                   </div>
 

@@ -155,7 +155,7 @@ export default function Detail({ params }: { params: { slug: string } }) {
           </div>
           <div className="w-11/12 flex flex-col lg:flex-row-reverse">
 
-            <div className="w-full h-96 sm:h-[484px] gap-4 flex lg:w-7/12">
+            <div className="w-full h-80 sm:h-[484px] gap-4 flex lg:w-7/12">
               <div className="w-10/12">
 
                 <div className="w-full h-full">

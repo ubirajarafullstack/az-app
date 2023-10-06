@@ -12,13 +12,13 @@
 
 .content-slide-and-fade {
   position: relative;
-  left: 300px;
+  left: 100px;
   opacity: 0;
 }
 
 @keyframes intro {
   from {
-    left: 300px;
+    left: 100px;
     opacity: 0;
   }
 
@@ -30,7 +30,7 @@
 
 .swiper-slide-active .content-slide-and-fade {
   animation-name: intro;
-  animation-duration: 0.8s;
+  animation-duration: 0.4s;
   animation-timing-function: ease-in-out;
   animation-delay: 0s;
   animation-direction: normal;
@@ -64,4 +64,29 @@
 
 .swiper-slide-active .breadcrumb {
   opacity: 1;
+}
+
+.loading-more-button {
+  opacity: 0;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.loading-more-button {
+  animation-name: fade;
+  animation-duration: 0.8s;
+  animation-timing-function: ease-in-out;
+  animation-delay: 2s;
+  animation-direction: normal;
+  animation-iteration-count: initial;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
 }
