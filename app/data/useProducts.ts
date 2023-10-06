@@ -1,7 +1,7 @@
 import { InfiniteData, useInfiniteQuery } from '@tanstack/react-query';
 import { graphqlClient } from './hygraph';
 import { productsByDesc } from '../graphql/products.graphql';
-import { useState} from 'react';
+import { useState } from 'react';
 
 export type ProductType = Book | Shoe;
 
@@ -117,24 +117,37 @@ type Variables = {
 export function useProducts(limit: number) {
 
   const [totalProducts, setTotalProducts] = useState<number>(0);
-  
+  const [imageUrls, setImagesUrls] = useState<string[]>([]);
+
   async function products(page: number) {
 
     console.log('page from hook', page)
-    
+
     let variables: Variables = {
       limit
     }
-    
+
     const data = await graphqlClient.request<Data>(
       productsByDesc,
       variables
     );
 
     setTotalProducts(data.productsConnection.edges.length);
-    
+
+    let extraData = data.productsConnection.edges.slice((page - 1) * 2, page * 2);
+    setImagesUrls(extraData.flatMap((edge) => edge.node.images.map((image) => image.url)));
+
+    //setImagesUrls(data.productsConnection.edges.flatMap((page) => page.node.images.map((image) => image.url)));
+
     return data.productsConnection.edges.slice((page - 1) * 1, page * 1);
   }
+
+  const fetchAndSetNextPage = () => {
+    fetchNextPage().then((newData) => {
+      const newImages = newData?.data?.pages.flatMap((page) => page.flatMap((e) => e.node.images.map((image) => image.url))) || [];
+      setImagesUrls((prevImages) => [...prevImages, ...newImages]);
+    });
+  }; 
 
   const {
     data,
@@ -147,7 +160,7 @@ export function useProducts(limit: number) {
     isFetchingPreviousPage,
   } = useInfiniteQuery({
     queryKey: ['products'],
-    queryFn: ({pageParam = 1}) => products(pageParam),
+    queryFn: ({ pageParam = 1 }) => products(pageParam),
     getNextPageParam: (lastPage, pages) => {
       if (lastPage.length === 0) {
         return undefined;
@@ -156,12 +169,14 @@ export function useProducts(limit: number) {
     },
     refetchOnWindowFocus: false,
   });
-  
+
   return {
     data,
     totalProducts,
+    imageUrls,
     isLoading,
     fetchNextPage,
+    fetchAndSetNextPage,
     fetchPreviousPage,
     // @ts-ignore
     hasNextPage: hasNextPage && data?.pages[data?.pages.length - 1].length > 0,

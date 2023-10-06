@@ -173,8 +173,10 @@ export default function Products() {
   let {
     data,
     totalProducts,
+    imageUrls,
     isLoading,
     fetchNextPage,
+    fetchAndSetNextPage,
     fetchPreviousPage,
     hasNextPage,
     hasPreviousPage,
@@ -213,7 +215,11 @@ export default function Products() {
     }
   }, [pathname, galleryContainer, thumbsContainer]); */
 
-
+  imageUrls.forEach(url => {
+    const img = new Image();
+    img.src = url;
+    console.log('from img urls', url);
+  });
 
   useEffect(() => {
     if (mainContainer && sliderNext) {
@@ -231,7 +237,7 @@ export default function Products() {
 
   if (isLoading) return <Loading />;
 
-  console.log(mainData);
+  console.log('main data', mainData);
 
   return (
     <>
