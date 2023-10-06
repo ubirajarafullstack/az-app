@@ -20,6 +20,7 @@ import 'swiper/css/free-mode';
 import 'swiper/css/thumbs';
 
 import './swiper.css';
+import './products.css';
 
 export default function Products() {
 
@@ -251,53 +252,69 @@ export default function Products() {
                   <div key={index}>
                     {page.map((edge: Edge, index: number) => {
                       return (
-                        <SwiperSlide key={edge.cursor} className="flex flex-col justify-center items-center" data-hash={edge.node.slug}>
+                        <SwiperSlide key={edge.cursor} className="" data-hash={edge.node.slug}>
+                          <div className="content-slide-and-fade w-full flex flex-col justify-center items-center">
 
-                          <div className="breadcrumb w-11/12 p-4 text-xs">
-                            {edge.node.department}
-                            <span className="inline-block px-1">/</span>
-                            {edge.node.spirit}
-                            <span className="inline-block px-1">/</span>
-                            {edge.node.productCategory}
-                            <span className="inline-block px-1">/</span>
-                            {edge.node.productCategory === 'Books'
-                              ?
-                              (
-                                <>
-                                  {/* @ts-ignore */}
-                                  {edge.node.productType.bookCategory}
-                                  <span className="inline-block px-1">/</span>
-                                  {/* @ts-ignore */}
-                                  {edge.node.productType.author}
-                                </>
-                              )
-                              :
-                              (
-                                <>
-                                  {/* @ts-ignore */}
-                                  {edge.node.productType.shoeCategory}
-                                  <span className="inline-block px-1">/</span>
-                                  {/* @ts-ignore */}
-                                  {edge.node.productType.brand}
-                                  <span className="inline-block px-1">/</span>
-                                  {/* @ts-ignore */}
-                                  {edge.node.productType.gender}
-                                </>
-                              )
-                            }
-                          </div>
-                          <div className="w-11/12 flex flex-col lg:flex-row-reverse">
+                            <div className="breadcrumb w-11/12 p-4 text-xs">
+                              {edge.node.department}
+                              <span className="inline-block px-1">/</span>
+                              {edge.node.spirit}
+                              <span className="inline-block px-1">/</span>
+                              {edge.node.productCategory}
+                              <span className="inline-block px-1">/</span>
+                              {edge.node.productCategory === 'Books'
+                                ?
+                                (
+                                  <>
+                                    {/* @ts-ignore */}
+                                    {edge.node.productType.bookCategory}
+                                    <span className="inline-block px-1">/</span>
+                                    {/* @ts-ignore */}
+                                    {edge.node.productType.author}
+                                  </>
+                                )
+                                :
+                                (
+                                  <>
+                                    {/* @ts-ignore */}
+                                    {edge.node.productType.shoeCategory}
+                                    <span className="inline-block px-1">/</span>
+                                    {/* @ts-ignore */}
+                                    {edge.node.productType.brand}
+                                    <span className="inline-block px-1">/</span>
+                                    {/* @ts-ignore */}
+                                    {edge.node.productType.gender}
+                                  </>
+                                )
+                              }
+                            </div>
 
-                            <div className="w-full h-96 sm:h-[484px] gap-4 flex lg:w-7/12">
+                            <div className="w-11/12 flex flex-col lg:flex-row-reverse">
 
-                              <div className="w-10/12">
+                              <div className="w-full h-96 sm:h-[484px] gap-4 flex lg:w-7/12">
 
-                                <div className="w-full h-full">
-                                  <Swiper className={`gallery gallery-${data?.pageParams.length! - 1} bg-white rounded-md`} {...galleryOptions(data?.pageParams.length! - 1)} onSwiper={galleryOnSwiper} onSlideChange={galleryOnSlideChange}>
+                                <div className="w-10/12">
+
+                                  <div className="w-full h-full">
+                                    <Swiper className={`gallery gallery-${data?.pageParams.length! - 1} bg-white rounded-md`} {...galleryOptions(data?.pageParams.length! - 1)} onSwiper={galleryOnSwiper} onSlideChange={galleryOnSlideChange}>
+                                      {edge.node.images.map((e, i) => {
+                                        return (
+                                          <SwiperSlide className="bg-white p-6 rounded-md flex flex-row justify-center items-center" key={i}>
+                                            <img className="block object-contain max-h-full" src={e.url} alt="" />
+                                          </SwiperSlide>
+                                        )
+                                      })}
+                                    </Swiper>
+                                  </div>
+
+                                </div>
+
+                                <div className="w-2/12 h-3/6">
+                                  <Swiper className={`thumbs thumbs-${data?.pageParams.length! - 1}`} {...thumbsOptions(data?.pageParams.length! - 1)} onSwiper={thumbsOnSwiper} onSlideChange={thumbsOnSlideChange}>
                                     {edge.node.images.map((e, i) => {
                                       return (
-                                        <SwiperSlide className="bg-white p-6 rounded-md flex flex-row justify-center items-center" key={i}>
-                                          <img className="block object-contain max-h-full" src={e.url} alt="" />
+                                        <SwiperSlide className="bg-white rounded-sm opacity-50 flex flex-col justify-center items-center" key={i}>
+                                          <img className="w-full h-full block object-contain" src={e.url} alt="" />
                                         </SwiperSlide>
                                       )
                                     })}
@@ -306,39 +323,25 @@ export default function Products() {
 
                               </div>
 
-                              <div className="w-2/12 h-3/6">
-                                <Swiper className={`thumbs thumbs-${data?.pageParams.length! - 1}`} {...thumbsOptions(data?.pageParams.length! - 1)} onSwiper={thumbsOnSwiper} onSlideChange={thumbsOnSlideChange}>
-                                  {edge.node.images.map((e, i) => {
-                                    return (
-                                      <SwiperSlide className="bg-white rounded-sm opacity-50 flex flex-col justify-center items-center" key={i}>
-                                        <img className="w-full h-full block object-contain" src={e.url} alt="" />
-                                      </SwiperSlide>
-                                    )
-                                  })}
-                                </Swiper>
-                              </div>
+                              <div className="info w-full lg:w-5/12 flex">
 
-                            </div>
+                                <div className="w-10/12 flex flex-col">
+                                  <div className="flex">
+                                    <div className="w-full flex flex-col justify-between items-start sm:flex-row sm:items-center lg:items-start">
+                                      <h1 className="m-4 mt-6 text-xl">{edge.node.name}</h1>
 
-                            <div className="info w-full lg:w-5/12 flex">
-
-                              <div className="w-10/12 flex flex-col">
-                                <div className="flex">
-                                  <div className="w-full flex flex-col justify-between items-start sm:flex-row sm:items-center lg:items-start">
-                                    <h1 className="m-4 mt-6 text-xl">{edge.node.name}</h1>
-
-                                    <h2 className="m-4 mt-6 text-xl">{edge.node.price}</h2>
+                                      <h2 className="m-4 mt-6 text-xl">{edge.node.price}</h2>
+                                    </div>
                                   </div>
+
+                                  <div className="m-4 mt-2 hidden sm:flex" dangerouslySetInnerHTML={{ __html: edge.node.description.html }} />
+
                                 </div>
 
-                                <div className="m-4 mt-2 hidden sm:flex" dangerouslySetInnerHTML={{ __html: edge.node.description.html }} />
-
-                              </div>
-
-                              <div className="w-2/12">
-                                <button
-                                  onClick={() => router.push(`/products/detail/${edge.node.slug}`)}
-                                  className="
+                                <div className="w-2/12">
+                                  <button
+                                    onClick={() => router.push(`/products/detail/${edge.node.slug}`)}
+                                    className="
                                       more-button 
                                       m-3 
                                       p-[2px] 
@@ -346,12 +349,14 @@ export default function Products() {
                                       text-5xl 
                                       text-slate-400
                                       "
-                                >
-                                  <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
-                                  </svg>
+                                  >
+                                    <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
+                                    </svg>
 
-                                </button>
+                                  </button>
+                                </div>
+
                               </div>
 
                             </div>
