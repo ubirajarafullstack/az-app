@@ -331,7 +331,7 @@ export default function Products() {
                                   </div>
                                 </div>
 
-                                <div className="m-4 mt-2" dangerouslySetInnerHTML={{ __html: edge.node.description.html }} />
+                                <div className="m-4 mt-2 hidden sm:flex" dangerouslySetInnerHTML={{ __html: edge.node.description.html }} />
 
                               </div>
 
@@ -382,7 +382,7 @@ export default function Products() {
               items-center 
               justify-center 
               text-orange-600 
-              text-6xl
+              text-5xl
               "
           onClick={() => {
             fetchNextPage();
