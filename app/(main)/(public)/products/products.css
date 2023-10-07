@@ -10,26 +10,23 @@
   margin: 1rem 0;
 }
 
-.content-slide-and-fade {
+.slide-effect {
   position: relative;
   left: 100px;
-  opacity: 0;
 }
 
-@keyframes intro {
+@keyframes slide {
   from {
     left: 100px;
-    opacity: 0;
   }
 
   to {
     left: 0px;
-    opacity: 1;
   }
 }
 
-.swiper-slide-active .content-slide-and-fade {
-  animation-name: intro;
+.swiper-slide-active .slide-effect {
+  animation-name: slide;
   animation-duration: 0.4s;
   animation-timing-function: ease-in-out;
   animation-delay: 0s;
@@ -50,7 +47,7 @@
 
 .more-button {
   opacity: 0;
-  transition: opacity 1s ease-in 1s;
+  transition: opacity 0.8s ease-in 0.2s;
 }
 
 .swiper-slide-active .more-button {
@@ -59,7 +56,7 @@
 
 .breadcrumb {
   opacity: 0;
-  transition: opacity 0.8s ease-in 1.4s;
+  transition: opacity 0.8s ease-in 0.3s;
 }
 
 .swiper-slide-active .breadcrumb {
@@ -84,7 +81,7 @@
   animation-name: fade;
   animation-duration: 0.8s;
   animation-timing-function: ease-in-out;
-  animation-delay: 2s;
+  animation-delay: 1s;
   animation-direction: normal;
   animation-iteration-count: initial;
   animation-fill-mode: forwards;

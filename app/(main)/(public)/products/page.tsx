@@ -253,7 +253,7 @@ export default function Products() {
                     {page.map((edge: Edge, index: number) => {
                       return (
                         <SwiperSlide key={edge.cursor} className="" data-hash={edge.node.slug}>
-                          <div className="content-slide-and-fade w-full flex flex-col justify-center items-center">
+                          <div className="slide-effect w-full flex flex-col justify-center items-center">
 
                             <div className="breadcrumb w-11/12 p-4 text-xs">
                               {edge.node.department}
