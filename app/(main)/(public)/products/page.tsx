@@ -382,12 +382,15 @@ export default function Products() {
               absolute 
               z-40 
               bottom-0 
-              left-0 
+              right-1/2 
+              translate-x-6 
+              lg:right-0 
+              lg:translate-x-0 
               flex 
               items-center 
               justify-center 
-              text-orange-600 
-              text-6xl
+              text-slate-400 
+              text-5xl
               "
           onClick={() => {
             fetchNextPage();
