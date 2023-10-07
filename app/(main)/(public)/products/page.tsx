@@ -242,7 +242,7 @@ export default function Products() {
 
   return (
     <>
-      <div className="relative h-screen flex justify-center items-center">
+      <div className="relative h-[calc(100dvh)] flex justify-center items-center">
         {mainData && (
           <Swiper {...mainOptions} className="main" onSwiper={mainOnSwiper} onSlideChange={mainOnSlideChange}>
             <>
@@ -380,14 +380,14 @@ export default function Products() {
           className="
               loading-more-button
               absolute 
-              z-20 
-              bottom-7 
-              right-7 
+              z-40 
+              bottom-0 
+              left-0 
               flex 
               items-center 
               justify-center 
               text-orange-600 
-              text-5xl
+              text-6xl
               "
           onClick={() => {
             fetchNextPage();
