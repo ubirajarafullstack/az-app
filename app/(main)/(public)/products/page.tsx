@@ -309,16 +309,43 @@ export default function Products() {
 
                                 </div>
 
-                                <div className="w-2/12 h-3/6">
-                                  <Swiper className={`thumbs thumbs-${data?.pageParams.length! - 1}`} {...thumbsOptions(data?.pageParams.length! - 1)} onSwiper={thumbsOnSwiper} onSlideChange={thumbsOnSlideChange}>
-                                    {edge.node.images.map((e, i) => {
-                                      return (
-                                        <SwiperSlide className="bg-white rounded-sm opacity-50 flex flex-col justify-center items-center" key={i}>
-                                          <img className="w-full h-full block object-contain" src={e.url} alt="" />
-                                        </SwiperSlide>
-                                      )
-                                    })}
-                                  </Swiper>
+                                <div className="w-2/12 h-full">
+                                  
+                                  <div className="h-3/6 flex sm:hidden">
+                                    <button
+                                      onClick={() => router.push(`/products/detail/${edge.node.slug}`)}
+                                      className="
+                                        more-button 
+                                        self-start 
+                                        p-[2px] 
+                                        inline-block
+                                        text-5xl 
+                                        text-slate-400
+                                        "
+                                    >
+                                      <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
+                                      </svg>
+
+                                    </button>
+                                  </div>
+                                  
+                                  
+                                  <div className="h-3/6 hidden sm:flex">
+                                    <Swiper className={`thumbs thumbs-${data?.pageParams.length! - 1}`} {...thumbsOptions(data?.pageParams.length! - 1)} onSwiper={thumbsOnSwiper} onSlideChange={thumbsOnSlideChange}>
+                                      {edge.node.images.map((e, i) => {
+                                        return (
+                                          <SwiperSlide className="bg-white rounded-sm opacity-50 flex flex-col justify-center items-center" key={i}>
+                                            <img className="w-full h-full block object-contain" src={e.url} alt="" />
+                                          </SwiperSlide>
+                                        )
+                                      })}
+                                    </Swiper>
+                                  </div>
+
+                                  
+
+
                                 </div>
 
                               </div>
@@ -343,9 +370,10 @@ export default function Products() {
                                     onClick={() => router.push(`/products/detail/${edge.node.slug}`)}
                                     className="
                                       more-button 
+                                      hidden
                                       m-3 
                                       p-[2px] 
-                                      inline-block
+                                      sm:flex
                                       text-5xl 
                                       text-slate-400
                                       "
