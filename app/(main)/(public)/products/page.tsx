@@ -383,7 +383,7 @@ export default function Products() {
               z-40 
               bottom-0 
               right-1/2 
-              translate-x-6 
+              translate-x-10 
               lg:right-0 
               lg:translate-x-0 
               flex 
