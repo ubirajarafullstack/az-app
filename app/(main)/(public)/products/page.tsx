@@ -148,22 +148,26 @@ export default function Products() {
     const thumbsSwiper = thumbsContainer[activeIndex];
     const gallerySwiper = galleryContainer[activeIndex];
 
-    //console.log('from main on slide change', gallerySwiper)
+    if (gallerySwiper && thumbsSwiper) {
+      gallerySwiper.disable();
+      thumbsSwiper.disable();
+
+      //gallerySwiper.thumbs.swiper = thumbsSwiper;
+      //thumbsSwiper.thumbs.swiper = gallerySwiper;
+      //thumbsSwiper.el.classList.add('swiper-thumbs');
+
+      galleryContainer[activeIndex] = gallerySwiper;
+      thumbsContainer[activeIndex] = thumbsSwiper;
+
+      gallerySwiper.enable();
+      thumbsSwiper.enable();
+    }
 
     if (gallerySwiper) {
       gallerySwiper.slideNext();
     }
-
-    if (thumbsSwiper && !thumbsSwiper.el.classList.contains('swiper-thumbs')) {
-      if (thumbsSwiper.thumbs.swiper !== gallerySwiper) {
-        gallerySwiper.thumbs.swiper = thumbsSwiper;
-        //thumbsSwiper.thumbs.swiper = gallerySwiper;
-      }
-      thumbsSwiper.el.classList.add('swiper-thumbs');
-    }
-
-
   };
+
 
   const galleryOnSlideChange = (swiper: any) => {
   };
@@ -199,6 +203,31 @@ export default function Products() {
     }
 
   }, [thumbsContainer, galleryContainer, mainContainer, data]); */
+
+  useEffect(() => {
+    if (pathname === '/products') {
+      for (const key in galleryContainer) {
+        const gallerySwiper = galleryContainer[key];
+        const thumbsSwiper = thumbsContainer[key];
+
+        if (gallerySwiper && thumbsSwiper) {
+          gallerySwiper.disable();
+          thumbsSwiper.disable();
+
+
+          gallerySwiper.thumbs.swiper = thumbsSwiper;
+          thumbsSwiper.el.classList.add('swiper-thumbs');
+
+          galleryContainer[key] = gallerySwiper;
+          thumbsContainer[key] = thumbsSwiper;
+
+          gallerySwiper.enable();
+          thumbsSwiper.enable();
+        }
+      }
+    }
+  }, [pathname, galleryContainer, thumbsContainer]);
+
 
   /* useEffect(() => {
     if (pathname === '/products') {
@@ -240,6 +269,8 @@ export default function Products() {
 
   console.log('main data', mainData);
 
+  let globalIndex = 0;
+
   return (
     <>
       <div className="relative h-[calc(100dvh)] flex justify-center items-center overflow-hidden">
@@ -247,10 +278,13 @@ export default function Products() {
           <Swiper {...mainOptions} className="main" onSwiper={mainOnSwiper} onSlideChange={mainOnSlideChange}>
             <>
               {
-                mainData?.pages.map((page: Edge[], index: number) => (
+                mainData?.pages.map((page: Edge[], pageIndex: number) => (
 
-                  <div key={index}>
+                  <div key={pageIndex}>
                     {page.map((edge: Edge, index: number) => {
+                      //console.log('ind', globalIndex);
+
+
                       return (
                         <SwiperSlide key={edge.cursor} className="" data-hash={edge.node.slug}>
                           <div className="slide-effect w-full flex flex-col justify-center items-center">
@@ -296,7 +330,7 @@ export default function Products() {
                                 <div className="w-10/12">
 
                                   <div className="w-full h-full">
-                                    <Swiper className={`gallery gallery-${data?.pageParams.length! - 1} bg-white rounded-md`} {...galleryOptions(data?.pageParams.length! - 1)} onSwiper={galleryOnSwiper} onSlideChange={galleryOnSlideChange}>
+                                    <Swiper className={`gallery gallery-${globalIndex} bg-white rounded-md`} {...galleryOptions(globalIndex)} onSwiper={galleryOnSwiper} onSlideChange={galleryOnSlideChange}>
                                       {edge.node.images.map((e, i) => {
                                         return (
                                           <SwiperSlide className="bg-white p-6 rounded-md flex flex-row justify-center items-center" key={i}>
@@ -310,7 +344,7 @@ export default function Products() {
                                 </div>
 
                                 <div className="w-2/12 h-full">
-                                  
+
                                   <div className="h-3/6 flex sm:hidden">
                                     <button
                                       onClick={() => router.push(`/products/detail/${edge.node.slug}`)}
@@ -329,10 +363,10 @@ export default function Products() {
 
                                     </button>
                                   </div>
-                                  
-                                  
+
+
                                   <div className="h-3/6 hidden sm:flex">
-                                    <Swiper className={`thumbs thumbs-${data?.pageParams.length! - 1}`} {...thumbsOptions(data?.pageParams.length! - 1)} onSwiper={thumbsOnSwiper} onSlideChange={thumbsOnSlideChange}>
+                                    <Swiper className={`thumbs thumbs-${globalIndex}`} {...thumbsOptions(globalIndex)} onSwiper={thumbsOnSwiper} onSlideChange={thumbsOnSlideChange}>
                                       {edge.node.images.map((e, i) => {
                                         return (
                                           <SwiperSlide className="bg-white rounded-sm opacity-50 flex flex-col justify-center items-center" key={i}>
@@ -341,9 +375,16 @@ export default function Products() {
                                         )
                                       })}
                                     </Swiper>
+
+                                    <>
+                                      {(() => {
+                                        console.log('gls', globalIndex);
+                                        globalIndex++;
+                                      })()}
+                                    </>
                                   </div>
 
-                                  
+
 
 
                                 </div>
