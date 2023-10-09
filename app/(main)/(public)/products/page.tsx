@@ -402,7 +402,7 @@ export default function Products() {
                                     </div>
                                   </div>
 
-                                  <div className="m-4 mt-2 hidden sm:flex" dangerouslySetInnerHTML={{ __html: edge.node.description.html }} />
+                                  <div className="m-4 mt-0 hidden sm:flex" dangerouslySetInnerHTML={{ __html: edge.node.description.html }} />
 
                                 </div>
 
