@@ -242,7 +242,7 @@ export default function Products() {
 
   return (
     <>
-      <div className="relative h-[calc(100dvh)] flex justify-center items-center">
+      <div className="relative h-[calc(100dvh)] flex justify-center items-center overflow-hidden">
         {mainData && (
           <Swiper {...mainOptions} className="main" onSwiper={mainOnSwiper} onSlideChange={mainOnSlideChange}>
             <>
