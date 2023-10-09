@@ -1,5 +1,6 @@
 .highlights ul {
   list-style: disc;
+  margin: 1rem 0;
 }
 
 .highlights ul li {

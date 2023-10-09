@@ -169,7 +169,7 @@ export default function Detail({ params }: { params: { slug: string } }) {
                   <div className="w-full h-full">
                     <Swiper className="gallery bg-white rounded-md" {...galleryOptions(index)} onSwiper={gOnSwiper}>
 
-                      {item?.images.map((e, i) => {
+                      {item.images.map((e, i) => {
                         return (
                           <SwiperSlide className="bg-white p-6 rounded-md flex flex-row justify-center items-center" key={i}>
                             <img className="block object-contain max-h-full" src={e.url} alt="" />
@@ -185,7 +185,7 @@ export default function Detail({ params }: { params: { slug: string } }) {
                 <div className="w-2/12 h-3/6">
                   <Swiper className="thumbs" {...thumbsOptions(index)} onSwiper={tOnSwiper}>
 
-                    {item?.images.map((e, i) => {
+                    {item.images.map((e, i) => {
                       return (
                         <SwiperSlide className="bg-white rounded-sm opacity-50 flex flex-col justify-center items-center" key={i}>
                           <img className="w-full h-full block object-contain" src={e.url} alt="" />
@@ -202,14 +202,14 @@ export default function Detail({ params }: { params: { slug: string } }) {
                 <div className="w-10/12 flex flex-col">
                   <div className="flex">
                     <div className="w-full flex flex-col justify-between items-start sm:flex-row sm:items-center lg:items-start">
-                      <h1 className="m-4 mt-6 text-xl">{item?.name}</h1>
+                      <h1 className="m-4 mt-6 text-xl">{item.name}</h1>
 
-                      <h2 className="m-4 mt-6 text-xl">{item?.price}</h2>
+                      <h2 className="mx-4 sm:m-4 sm:mt-6 text-xl">{item.price}</h2>
                     </div>
                   </div>
 
                   <h2 className="m-4 mb-0 font-bold">Descrição</h2>
-                  <div className="m-4 mt-2" dangerouslySetInnerHTML={{ __html: item!.description.html }} />
+                  <div className="paragraphs m-4 mt-0" dangerouslySetInnerHTML={{ __html: item.description.html }} />
 
                   <Link
                     href="#"
@@ -219,26 +219,27 @@ export default function Detail({ params }: { params: { slug: string } }) {
                     rounded-full 
                     px-5 
                     py-3 
-                    bg-orange-600 
+                    bg-black 
                     font-semibold 
                     text-white 
+                    text-sm 
                     shadow-sm 
                     "
                   >
-                    {item?.buttonLabel}
+                    {item.buttonLabel}
                   </Link>
 
                   <h2 className="m-4 mb-0 font-bold">Produto</h2>
-                  <div className="highlights m-8 mt-0" dangerouslySetInnerHTML={{ __html: item!.highlights.html }} />
+                  <div className="highlights m-8 mt-0" dangerouslySetInnerHTML={{ __html: item.highlights.html }} />
 
                   {item.productCategory === 'Books' ? (
                     <>
                       <h2 className="m-4 mb-0 font-bold">Motivos para ler</h2>
                       {/* @ts-ignore */}
-                      <div className="paragraphs m-4 mt-2" dangerouslySetInnerHTML={{ __html: item.productType.why.html }} />
+                      <div className="paragraphs m-4 mt-0" dangerouslySetInnerHTML={{ __html: item.productType.why.html }} />
 
                       <h2 className="m-4 mb-0 font-bold">Sobre</h2>
-                      <div className="m-4 mt-2 grid gap-2 grid-cols-2 grid-rows-2">
+                      <div className="m-4 grid gap-2 grid-cols-2 grid-rows-2">
                         {/* @ts-ignore */}
                         <p>Autor: {item.productType.author}</p>
                         {/* @ts-ignore */}
@@ -252,7 +253,7 @@ export default function Detail({ params }: { params: { slug: string } }) {
                   ) : (
                     <>
                       <h2 className="m-4 mb-0 font-bold">Sobre</h2>
-                      <div className="m-4 mt-2 grid gap-2 grid-cols-2 grid-rows-2">
+                      <div className="m-4 grid gap-2 grid-cols-2 grid-rows-2">
                         {/* @ts-ignore */}
                         <p>Marca: {item.productType.brand}</p>
 
