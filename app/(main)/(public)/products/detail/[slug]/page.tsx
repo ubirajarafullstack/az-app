@@ -123,7 +123,7 @@ export default function Detail({ params }: { params: { slug: string } }) {
   product.push(data);
 
   return (
-    <div className="detail-page">
+    <div className="detail-page overflow-x-hidden">
       <div className="slide-effect">
         {product?.map((item, index) => (
           <div className="pt-36 flex flex-col justify-center items-center" key={index}>
