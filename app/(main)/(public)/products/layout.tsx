@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   return {
-    title: 'Az-app - produtos',
+    title: 'az-app - produtos',
     description: 'Curadoria de produtos'
   }
 }
