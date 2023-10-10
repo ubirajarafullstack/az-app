@@ -353,7 +353,7 @@ export default function Products() {
                                         self-start 
                                         p-[2px] 
                                         inline-block
-                                        text-5xl 
+                                        text-4xl 
                                         text-slate-400
                                         "
                                     >
@@ -412,10 +412,10 @@ export default function Products() {
                                     className="
                                       more-button 
                                       hidden
-                                      m-3 
+                                      m-4 
                                       p-[2px] 
                                       sm:flex
-                                      text-5xl 
+                                      text-4xl 
                                       text-slate-400
                                       "
                                   >
@@ -450,16 +450,14 @@ export default function Products() {
               loading-more-button
               absolute 
               z-40 
-              bottom-0 
+              bottom-2 
               right-1/2 
               translate-x-1/2 
-              lg:right-4 
-              lg:translate-x-0 
               flex 
               items-center 
               justify-center 
               text-slate-400 
-              text-5xl
+              text-4xl
               "
           onClick={() => {
             fetchNextPage();

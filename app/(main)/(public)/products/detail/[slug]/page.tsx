@@ -291,7 +291,7 @@ export default function Detail({ params }: { params: { slug: string } }) {
                     m-4 
                     p-[2px] 
                     inline-block
-                    text-5xl 
+                    text-4xl 
                     text-slate-400
                     "
                   >
@@ -308,10 +308,10 @@ export default function Detail({ params }: { params: { slug: string } }) {
                     onClick={() => router.push(`/products#${item.slug}`)}
                     className="
                     more-button 
-                    m-3 
+                    m-4 
                     p-[2px] 
                     inline-block
-                    text-5xl 
+                    text-4xl 
                     text-slate-400
                     "
                   >
